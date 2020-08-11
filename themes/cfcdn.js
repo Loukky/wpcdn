@@ -32,6 +32,3 @@ $.ajax({
         $('#tab2-s').css("display", "inline-block");
     }
 });
-
-setInterval(function(){ $('#usernowtime').html(`${new Date()}`) }, 100);
-$('#usersys').html(getUserOSInfo());
