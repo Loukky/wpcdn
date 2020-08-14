@@ -133,7 +133,7 @@
                 collapsedTopHeight -= o.stickySidebar.offset().top;
                 collapsedBottomHeight = o.stickySidebar.outerHeight() - collapsedBottomHeight - collapsedTopHeight;
                 if (collapsedTopHeight == 0) {
-                    o.stickySidebar.css('padding-top', 15);
+                    o.stickySidebar.css('padding-top', 45);
                     o.stickySidebarPaddingTop = 0;
                 }
                 else {
