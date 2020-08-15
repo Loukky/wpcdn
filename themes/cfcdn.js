@@ -5,11 +5,11 @@ $.ajax({
         let area  = data.split("colo=")[1].split("\n")[0];
         
         endTime = new Date().getTime();
-        $('#ftinfo').prepend(`当前 CDN 节点: <code>${areas[area]}</code>&nbsp;&nbsp;|&nbsp;&nbsp;加载耗时: <code>${endTime-startTime}ms</code>`);
+        $('#ftinfo').prepend(`当前 CDN 节点: <code>${areas[area]}</code>&nbsp;&nbsp;|&nbsp;&nbsp;本页加载耗时: <code>${endTime-startTime}ms</code>`);
     },
     error: function(){
         endTime = new Date().getTime();
-        $('#ftinfo').append(`加载耗时：<code>${endTime-startTime}ms</code>`); 
+        $('#ftinfo').append(`本页加载耗时：<code>${endTime-startTime}ms</code>`); 
     }
 });  
 $.ajax({
