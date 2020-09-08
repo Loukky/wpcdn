@@ -19,6 +19,9 @@ body a{
     border-radius: 1px;
     margin-bottom:2em;
 }
+.setting-msg p{
+	line-height:1.8em;
+}
 .identify-msg{
     margin-bottom: 2em;
 }
@@ -92,7 +95,7 @@ body a{
 }
 .operate div{
     display: inline;
-    margin-right:0.5em;
+    /* margin-right:0.5em; */
 }
 .operate .choose{
     height: 22px;
@@ -131,4 +134,17 @@ body a{
 }
 .analyze a{
     color:#FFFFFF;
+}
+.storage{
+	margin-top:2em;
+}
+/* 右侧浮动按钮 */
+.float-button {
+    position: fixed;
+    right: 40px;
+    top: 16em;
+    z-index: 99;
+}
+.float-button button{
+    width:36px;
 }
