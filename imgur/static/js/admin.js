@@ -3,6 +3,11 @@ layui.use(['form','element','layer','laydate'], function(){
 	var element = layui.element;
 	var layer = layui.layer;
 	var laydate = layui.laydate;
+	//渲染批量删除的时间段
+	laydate.render({
+	    elem: '#date' //指定元素
+	    ,range: '|'
+  	});
 
 	//执行一个laydate实例
 	laydate.render({
@@ -30,10 +35,110 @@ layui.use(['form','element','layer','laydate'], function(){
 	}); 
 	//站点设置提交
     form.on('submit(formsite)', function(data){
-      	console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-      	console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-		console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-		//return false;
+      	// console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+      	// console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+		// console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+		$.post("/set/site",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+			
+		});
+		return false;
+	});
+	//更新公告
+	form.on('submit(form_notice)', function(data){
+		// console.log(data.field);
+		// return false;
+		$.post("/set/options/notice",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+			
+		});
+		return false;
+	});
+	//更新页面底部
+	form.on('submit(form_footer)', function(data){
+		// console.log(data.field);
+		// return false;
+		$.post("/set/options/footer",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+			
+		});
+		return false;
+	});
+	//更新页面提示
+	form.on('submit(form_page_notice)', function(data){
+		// console.log(data.field);
+		// return false;
+		$.post("/set/options/page_notice",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+			
+		});
+		return false;
+	});
+	//更新TinYpng设置
+	form.on('submit(form_tinypng)', function(data){
+		// console.log(data.field);
+		// return false;
+		$.post("/set/tinypng",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+		});
+		return false;
+	});
+	//更新moderage
+	form.on('submit(form_moderate)', function(data){
+		// console.log(data.field);
+		// return false;
+		$.post("/set/moderate",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('添加失败:' + e, {icon: 5});
+			}
+		});
+		return false;
 	});
 	//上传限制开关按钮
 	form.on('switch(upswitch)', function(data){
@@ -48,10 +153,19 @@ layui.use(['form','element','layer','laydate'], function(){
 	}); 
 	//上传限制提交表单
 	form.on('submit(formuplimit)', function(data){
-		console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-		console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
 		console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-		// return false;
+		$.post("/set/uplimit",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+		return false;
 	});
 	//tinypng设置表单
 	form.on('submit(formtiny)', function(data){
@@ -62,9 +176,181 @@ layui.use(['form','element','layer','laydate'], function(){
 	form.on('submit(formModerate)', function(data){
 		
 	});
-	//更新localhost
+	//更新本地存储
 	form.on('submit(formlocalhost)', function(data){
 		
+		$.post("/set/storage/localhost",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+			
+		});
+    	return false;
+	});
+	//更新B2存储
+	form.on('submit(formb2)', function(data){
+		//layer.msg(JSON.stringify(data.field));
+		$.post("/set/storage/backblaze",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//更新COS
+	form.on('submit(form_cos)', function(data){
+		//layer.msg(JSON.stringify(data.field));
+		$.post("/set/storage/cos",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//更新七牛
+	form.on('submit(form_qiniu)', function(data){
+		$.post("/set/storage/qiniu",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				layer.msg(info.msg, {
+				icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//保存token状态
+	form.on('submit(saveToken)', function(data){
+		$.post("/set/save_token_status",data.field,function(data,status){
+			try{
+				var info = JSON.parse(data);
+					layer.msg(info.msg, {
+					icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//保存IP黑名单
+	form.on('submit(saveIP)', function(data){
+		$.post("/set/saveIP",data.field,function(data,status){
+			try{
+				var info = JSON.parse(data);
+				if( info.code == 200 ){
+					layer.msg(info.msg, {
+						icon: 1
+					});
+				}
+				else{
+					layer.msg(info.msg, {
+						icon: 5
+					});
+				}
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//更改token
+	form.on('submit(chgToken)', function(data){
+		$.post("/set/change_token",data.field,function(data,status){
+			try{
+				var info = JSON.parse(data);
+				var token = info.data.values;
+				$("#token").val(token);
+					layer.msg(info.msg, {
+					icon: 1
+				});
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//更新FTP
+	form.on('submit(form_ftp)', function(data){
+		//layer.msg(JSON.stringify(data.field));
+		$.post("/set/storage/ftp",data.field,function(data){
+			try{
+				var info = JSON.parse(data);
+				if(info.code == 200){
+					layer.msg(info.msg, {
+						icon: 1
+					});
+				}
+				else if(info.code == 0){
+					layer.msg(info.msg, {
+						icon: 5
+					});
+				}
+			}
+			catch(e){
+				layer.msg('设置失败:' + e, {icon: 5});
+			}
+		});
+    	return false;
+	});
+	//删除全部图片
+    form.on('submit(batch_delete)', function(data){
+      	//获取日期
+      	var date = $("#date").val();
+      	date = date.replace(' | ','|');
+      	
+      	//var data = JSON.parse();
+      	var engine = data.field.engine;
+      	layer.confirm('真的要删除（不可逆）？', {icon: 3, title:'危险提示：'}, function(index){
+		  	//加载中
+	      	layer.load(2);
+			$.get("/del/batch_del/" + date + '/' + engine + '/' + data.field.user,function(data,status){
+				if(status == 'success'){
+					try{
+						data = JSON.parse(data);
+						if(data.code == 200){
+							layer.closeAll('loading'); //关闭加载层
+							layer.open({
+							  title: '操作完成'
+							  ,content: '已删除' + data.num + '张图片！'
+							});
+						}
+					}
+					catch(e){
+						layer.closeAll('loading'); //关闭加载层
+						console.log(e);
+					}
+				}
+			});
+		  
+		  	layer.close(index);
+		});
+      	
+		return false;
 	});
 });
 
@@ -161,8 +447,28 @@ function del_img(id,imgid,path,thumbnail_path){
     layer.close(index);
     });
 }
+function del_id(id){
+	layer.confirm('确认删除这张图片？', {icon: 3, title:'温馨提示！'}, function(index){
+        $.get("/del/id/" + id,function(data,status){
+			var re = JSON.parse(data);
+            if(re.code == 200) {
+                $("#img"+id).remove();
+                //console.log("#img"+id);
+            }
+            else{
+                layer.msg(data);
+            }
+        });
+    
+    layer.close(index);
+    });
+}
 //压缩图片
-function compress(id){
+function compress(id,storage){
+	if(storage != 'localhost'){
+		layer.msg(storage + '类型不支持压缩！');
+		return false;
+	}
 	//加载中
 	var index = layer.load();
 	$.get("/deal/compress/" + id,function(data,status){
@@ -221,6 +527,33 @@ function del_more(){
     layer.close(index);
     });
 	
+}
+//批量取消可疑图片
+function cancel_dubious(){
+	//获取选中项
+	var chkIds = "";  
+	$("input:checkbox:checked").each(function(i){  
+		chkIds += $(this).val() + ",";  
+	});
+	//console.log(chkIds);
+	ids = chkIds.split(',');
+	layer.confirm('确定取消可疑状态？', {icon: 3, title:'温馨提示！'}, function(index){
+        for(var i = 0;i < ids.length - 1;i++){
+			$.get("/set/cancel/" + ids[i],function(data,status){
+				var re = JSON.parse(data);
+				if(re.code == 200) {
+					//移除可疑图片
+					$("#img"+re.id).remove();
+					console.log("#img"+ids[i]);
+				}
+				else{
+					layer.msg(data);
+				}
+			});
+		}
+    
+    layer.close(index);
+    });
 }
 //查看当前版本
 function version(){
@@ -297,3 +630,4 @@ function check_all(){
 function cancel_all(){
 	$("input[name='chk']").removeAttr("checked"); 
 }
+

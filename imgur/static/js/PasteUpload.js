@@ -9,6 +9,7 @@
     }
 }(this, function(){
     function ctrlVUtil(option){
+        $(".progress").hide();
         this.targetElement = null;
         this.uploadInput = null;
         this.uploadUrl = "http://www.oa.com/screenshot/create-file";
