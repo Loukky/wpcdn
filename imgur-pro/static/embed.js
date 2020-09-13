@@ -206,7 +206,8 @@ function showlink(url,thumburl){
         type: 1,
         title: false,
         content: $('#imglink'),
-        area: ['680px', '500px']
+        //area: ['680px', '500px'],
+	    maxWidth:'600'
     });
     $("#img-thumb a").attr('href', thumburl);
     $("#img-thumb img").attr('src',thumburl);
