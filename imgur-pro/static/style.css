@@ -53,7 +53,7 @@ body{
         display: block;
         width:100%;
         position:fixed;
-        left:0;
+        left:-15;
         bottom:0;
         /* background: #2F4056; */
         color:#FFFFFF;
