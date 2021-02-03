@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) ({
+jQuery(document).ready(function($) {
 
 $.ajax({
     url: "/cdn-cgi/trace",
