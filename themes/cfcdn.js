@@ -1,3 +1,5 @@
+jQuery(document).ready(function($) ({
+
 $.ajax({
     url: "/cdn-cgi/trace",
     success: function(data, status) {
@@ -31,4 +33,5 @@ $.ajax({
         $('#loading-tab2').css("display", "none");
         $('#tab2-s').css("display", "inline-block");
     }
+});
 });
