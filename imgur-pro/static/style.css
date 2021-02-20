@@ -19,7 +19,6 @@ body{
 	/*div.layui-container{
 		margin: -8px auto -5px auto;
 	}*/
-	{
     .footer{
         width:100%;
         position:fixed;
@@ -64,7 +63,7 @@ body{
 .footer{
     display: none;
 }
-@media screen and (min-height:680px){
+@media screen and (min-height:600px){
     .footer{
         display: block;
         width:95%;
