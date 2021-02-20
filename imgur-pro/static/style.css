@@ -54,7 +54,7 @@ body{
 @media screen and (min-height:680px){
     .footer{
         display: block;
-        width:100%;
+        width:95%;
         position:sticky;
         left:-15px;
         bottom:0;
