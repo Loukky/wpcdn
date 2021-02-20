@@ -16,6 +16,9 @@ body{
 	    width: 100%;
 	    color:#232323;
 	}
+	div.layui-container{
+		style:margin: -8px auto -5px auto;
+	}
 }
 .layui-input{
     /* background-color:rgba(255,255,255,0.9); */
