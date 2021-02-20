@@ -48,14 +48,14 @@ body{
 .menu .layui-nav{
     background-color:rgba(136,136,136,0);
 }
-.layui-footer{
+.footer{
     display: none;
 }
 @media screen and (min-height:680px){
-    .layui-footer{
+    .footer{
         display: block;
         width:100%;
-        position:fixed;
+        position:sticky;
         left:-15px;
         bottom:0;
         /* background: #2F4056; */
@@ -68,7 +68,7 @@ body{
     
 }
 
-.layui-footer a{
+.footer a{
     color:#FFFFFF;
 }
 .login{
@@ -536,7 +536,7 @@ body{
 	margin-left:2em;
 }
 .htmlcontent code{
-    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    font-family: Roboto,Noto Serif SC,Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
     color: #b94a48;
     padding: 2px 4px;
     background: #f3f3f0 none repeat scroll 0 0;
@@ -656,8 +656,4 @@ body{
 }
 .progress{
     display: none;
-}
-code{
-	line-height:24px;
-	font:14px Roboto,Noto Serif SC,Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif
 }
