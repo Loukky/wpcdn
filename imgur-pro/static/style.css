@@ -54,7 +54,7 @@ body{
 @media screen and (min-height:680px){
     .footer{
         display: block;
-        width:98%;
+        width:95%;
         position:sticky;
         left:-15px;
         bottom:0;
@@ -536,7 +536,7 @@ body{
 	margin-left:2em;
 }
 .htmlcontent code{
-    font-family: Roboto,Noto Serif SC,Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
     color: #b94a48;
     padding: 2px 4px;
     background: #f3f3f0 none repeat scroll 0 0;
@@ -545,6 +545,9 @@ body{
 }
 .htmlcontent{
 	color:#393D49;
+}
+code {
+    font-family:  Roboto,Noto Serif SC,Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;
 }
 #page-sidebar{
     /*background-color:#FFFFFF;*/
