@@ -48,11 +48,11 @@ body{
 .menu .layui-nav{
     background-color:rgba(136,136,136,0);
 }
-.footer{
+.layui-footer{
     display: none;
 }
 @media screen and (min-height:680px){
-    .footer{
+    .layui-footer{
         display: block;
         width:100%;
         position:fixed;
@@ -68,7 +68,7 @@ body{
     
 }
 
-.footer a{
+.layui-footer a{
     color:#FFFFFF;
 }
 .login{
