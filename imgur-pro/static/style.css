@@ -52,7 +52,19 @@ body{
 .footer{
     display: none;
 }
-@media screen and (min-height:600px){
+    .footer{
+        width:100%;
+        position:fixed;
+        left:-15px;
+        bottom:0;
+        /* background: #2F4056; */
+        color:#FFFFFF;
+        padding:7px;
+        text-align: center;
+        /* border-top:1px solid #BBBBBB; */
+        background-color:rgba(0,0,0,0.4);
+    }
+@media screen and (max-width:1200px){
     .footer{
         display: block;
         width:95%;
@@ -68,18 +80,8 @@ body{
     }
     
 }
-    .footer{
-        width:100%;
-        position:fixed;
-        left:-15px;
-        bottom:0;
-        /* background: #2F4056; */
-        color:#FFFFFF;
-        padding:7px;
-        text-align: center;
-        /* border-top:1px solid #BBBBBB; */
-        background-color:rgba(0,0,0,0.4);
-    }
+
+
 .footer a{
     color:#FFFFFF;
 }
