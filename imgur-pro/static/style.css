@@ -17,7 +17,7 @@ body{
 	    color:#232323;
 	}
 	div.layui-container{
-		style:margin: -8px auto -5px auto;
+		margin: -8px auto -5px auto;
 	}
 }
 .layui-input{
