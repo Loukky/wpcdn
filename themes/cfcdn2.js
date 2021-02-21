@@ -8,7 +8,7 @@ $.ajax({
          var ip = "<?php echo $_SERVER['SERVER_ADDR'];?>"
 		 var remoteip = "<?php echo $ip;?>"
         //endTime = new Date().getTime();
-        $('#ftinfo').prepend(`CDN已启用，当前 CDN 节点: <code>${areas[area]}</code>,回源IP：<code>${ip}</code>`);
+        $('#ftinfo').prepend(`CDN已启用，当前 CDN 节点: <code>${areas[area]}</code>,回源IP：<code>${remoteip}</code>`);
     },
     error: function(){
         //endTime = new Date().getTime();
