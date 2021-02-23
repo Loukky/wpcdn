@@ -459,7 +459,7 @@ body{
 .img_thumb{
     
     /* border:1px solid #666666; */
-    /* border-radius: 5px; */
+    border-radius: 5px; 
     text-align:center;
     height:169.72px;
     background: #F6F6F6;
