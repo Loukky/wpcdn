@@ -292,7 +292,7 @@
   .home.blog #primary,
   #secondary,
   .home.blog #secondary {
-    float: none;
+    float: left;
     width: 100%;
   }
 }
