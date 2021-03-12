@@ -10,7 +10,7 @@ $.ajax({
     },
     error: function(){
         //endTime = new Date().getTime();
-        $('#ftinfo').append(`CDN节点获取失败`); 
+        $('#ftinfo').append(`  `); 
     }
 });  
 $.ajax({
