@@ -24,10 +24,10 @@ span.ua, span.os {
     border-color: #eea236 !important;
 }
 
-/*.ua_maxthon {*/
-/*background-color: #7373B9 !important;*/
-/*border-color: #7373B9 !important;*/
-/*}*/
+.ua_maxthon {
+background-color: #7373B9 !important;
+border-color: #7373B9 !important;
+}
 
 .ua_ucweb {
     background-color: #FF740F !important;
