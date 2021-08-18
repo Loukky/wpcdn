@@ -4,7 +4,7 @@ jQuery(document).ready(function($){
             var c=$.trim($(this).attr("data-ip")),t=$(this),i="";
             $.getScript("https://ip.zxinc.org/api.php?type=js&ip="+c,function(){
                 if(remote_ip_info.ret==1){
-                    var h=remote_ip_info.data.ip.location;
+                    var h=returnIpData.data.ip.location;
                     i+=h;
                    
                 }
