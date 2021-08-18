@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
         $(".vfhkyipquery").each(function(){
             var c=$.trim($(this).attr("data-ip")),t=$(this),i="";
             $.getScript("https://ip.zxinc.org/api.php?type=js&ip="+c,function(){
-                if(remote_ip_info.ret==1){
+                if(returnIpData.ret==1){
                     var h=returnIpData.data.ip.location;
                     i+=h;
                    
