@@ -11,7 +11,7 @@ jQuery(document).ready(function($){
                 else{
                     i="未知IP地址";
                 }
-                t.replaceWith('<span class="ipinfo">'+i+"</span>");
+                t.replaceWith('<span class="ipinfo" style="font-family:noto serif sc,noto sans sc,roboto,serif">'+i+"</span>");
             })
         })
     }
