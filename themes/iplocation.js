@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
                    
                 }
                 else{
-                    i="未知IP地址";
+                    i="未知归属地";
                 }
                 t.replaceWith('<span class="ipinfo" style="font-family:noto serif sc,noto sans sc,roboto,serif">'+i+"</span>");
             })
