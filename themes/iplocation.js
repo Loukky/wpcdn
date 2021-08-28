@@ -11,7 +11,7 @@ jQuery(document).ready(function($){
                 else{
                     i="未知归属地";
                 }
-                t.replaceWith('<span class="ipinfo" style="font-family:Roboto:ital,Ma Shan Zheng,noto serif sc,noto sans sc,roboto,cursive,serif">'+i+"</span>");
+                t.replaceWith('<span class="ipinfo" style="font-family:Caveat,Ma Shan Zheng,noto serif sc,noto sans sc,roboto,cursive,serif">'+i+"</span>");
             })
         })
     }
