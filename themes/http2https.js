@@ -1,4 +1,3 @@
-	var targetProtocol = "https:";
-	if (window.location.protocol != targetProtocol)
-		window.location.href = targetProtocol +
-		window.location.href.substring(window.location.protocol.length);
+if (location.protocol !== "https:"){
+location.replace(window.location.href.replace("http:", 
+"https:"));}
