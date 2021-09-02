@@ -83,7 +83,9 @@ body{
         /* border-top:1px solid #BBBBBB; */
         background-color:rgba(0,0,0,0.4);
     }
-    
+    footerword.footerword{
+	    width:95%;
+	}
 }
 
 
