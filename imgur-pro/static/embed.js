@@ -207,8 +207,8 @@ function showlink(url,thumburl){
         title: false,
         content: $('#imglink'),
         //area: ['680px', '500px'],
-	    maxWidth:'600',
-	  offset:'auto'
+	//    maxWidth:'600',
+	//  offset:'auto'
     });
     $("#img-thumb a").attr('href', thumburl);
     $("#img-thumb img").attr('src',thumburl);
