@@ -429,7 +429,8 @@ function imginfo(imgid,title){
 		type: 2, 
 		title:title,
 		//area:['520px','360px'],
-		maxWidth:'770',
+		maxWidth:'600',
+		maxHeight:'360',
 	  offset:'auto',
 		content: '/manage/imginfo/' + imgid //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 	}); 
