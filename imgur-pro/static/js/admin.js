@@ -393,7 +393,7 @@ function showlink(url,thumburl){
         title: false,
         content: $('#imglink'),
         //area: ['600px', '260px']
-			    maxWidth:'600',
+			    maxWidth:'600px',
 	  offset:'auto'
     });
     $("#img-thumb a").attr('href', thumburl);
