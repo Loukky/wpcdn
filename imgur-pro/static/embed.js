@@ -28,7 +28,8 @@ layui.use(['upload','form','element','layer','flow'], function(){
         });
         layer.photos({
             photos: '#lightgallery'
-            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            ,anim: 5, //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+		closeBtn:1
         });
         
 		//执行实例
