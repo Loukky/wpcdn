@@ -47,7 +47,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
             ,accept:'file'
             ,acceptMime:'image/webp,image/jpeg,image/pjpeg,image/bmp,image/png,image/x-png,image/gif'
             ,exts: 'jpg|jpeg|png|gif|bmp|webp'
-            ,size:10240
+            ,size:102400
             ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
                 layer.load(); //上传loading
             }
