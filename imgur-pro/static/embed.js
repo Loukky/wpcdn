@@ -99,7 +99,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
             ,acceptMime:'image/webp,image/jpeg,image/pjpeg,image/bmp,image/png,image/x-png,image/gif'
             ,exts: 'jpg|jpeg|png|gif|bmp|webp'
             ,multiple:true
-            ,size:10240
+            ,size:2048
             ,number:10     //可同时上传数量
             ,before: function(obj){ //上传之前的回调
                 //清空显示区域
