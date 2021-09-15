@@ -126,7 +126,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 if(res.code == 200){
                     //得到百分比
                     //var col = (n / total) * 100;
-                    multiple(res.url,res.delete);
+                    multiple(res.url,res.delete,res.token);
                     //对图片进行鉴黄识别
                     identify(res.id);
                     //element.progress('up-status', col + '%');
