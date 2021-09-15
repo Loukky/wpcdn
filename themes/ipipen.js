@@ -9,7 +9,7 @@ $.ajax({
         $('#userlocation-c').html(`${data.location.province} , ${data.location.country_name}`);
         
         if(data.location.city) $('#userlocation-c').html(`${data.location.city} , ${data.location.province} , ${data.location.country_name}`);
-        else $('#userlocation-c').css("display", "none");
+        else $('#userlocation-c').html(`${data.location.province} , ${data.location.country_name}`);
         $('#loading-tab2').css("display", "none");
         $('#tab2-s').css("display", "inline-block");
     },
