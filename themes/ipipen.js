@@ -6,9 +6,10 @@ $.ajax({
     type: "GET",
     success: function(data, status, xhr) {
         $('#userip-c').html(data.ip);
-        $('#userlocation-c').html(`${data.location.city} , ${data.location.province} , ${data.location.country_name}`);
-        /*if(data.data.location[4]) $('#userisp-c').html(data.data.location[4]);
-        else $('#userisp').css("display", "none");*/
+        $('#userlocation-c').html(`${data.location.province} , ${data.location.country_name}`);
+        
+        if(data.location.city) $('#userlocation-c').html(data.location.city);
+        else $('#userlocation-c').css("display", "none");
         $('#loading-tab2').css("display", "none");
         $('#tab2-s').css("display", "inline-block");
     },
