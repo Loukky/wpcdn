@@ -72,7 +72,9 @@ layui.use(['upload','form','element','layer','flow'], function(){
                     $("#markdown").val("![](" + res.url + ")");
                     $("#bbcode").val("[img]" + res.url + "[/img]");
                     $("#dlink").val(res.delete);
+		    $("#token").val(res.token);
                     $("#imgshow").show();
+			
                     //对图片进行鉴黄识别
                     identify(res.id);
                 }
