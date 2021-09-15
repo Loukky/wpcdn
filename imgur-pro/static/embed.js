@@ -101,7 +101,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
             ,acceptMime:'image/webp,image/jpeg,image/pjpeg,image/bmp,image/png,image/x-png,image/gif'
             ,exts: 'jpg|jpeg|png|gif|bmp|webp'
             ,multiple:true
-            ,size:2048
+            ,size:20480
             ,number:10     //可同时上传数量
             ,before: function(obj){ //上传之前的回调
                 //清空显示区域
@@ -110,6 +110,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 $("#re-md pre").empty();
                 $("#re-bbc pre").empty();
                 $("#re-dlink pre").empty();
+		$("#re-token pre").empty();    
                 layer.load(); //上传loading
                 n = 0;
             }
@@ -149,6 +150,7 @@ function multiple(url,dlink){
     $("#re-md pre").append("![](" + url + ")" + "<br>");
     $("#re-bbc pre").append("[img]" + url + "[/img]" + "<br>");
     $("#re-dlink pre").append(dlink + "<br>");
+    $("#re-token pre").append(token + "<br>");
 }
 
 //复制链接
