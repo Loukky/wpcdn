@@ -144,7 +144,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
 });
 
 //显示多图上传结果
-function multiple(url,dlink){
+function multiple(url,dlink,token){
     $("#re-url pre").append(url + "<br>");
     $("#re-html pre").append("&lt;img src = '" + url + "' /&gt;" + "<br>");
     $("#re-md pre").append("![](" + url + ")" + "<br>");
