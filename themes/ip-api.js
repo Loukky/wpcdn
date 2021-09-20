@@ -1,15 +1,15 @@
 jQuery(document).ready(function($) {
 
 $.ajax({
-    url: "http://ip-api.com/json/",
+    url: "https://ipwhois.app/json/",
     async: true,
     type: "GET",
     success: function(data, status, xhr) {
-        $('#userip-c').html(query);
-        $('#userlocation-c').html(`${regionName} , ${country} , ${isp}`);
+        $('#userip-c').html(ip);
+        $('#userlocation-c').html(`${region} , ${country} , ${isp}`);
         
-        if(data.location.city) $('#userlocation-c').html(`${city} , ${regionName} , ${country} , ${isp}`);
-        else $('#userlocation-c').html(`${regionName} , ${country} , ${isp}`);
+        if(data.location.city) $('#userlocation-c').html(`${city} , ${region} , ${country} , ${isp}`);
+        else $('#userlocation-c').html(`${region} , ${country} , ${isp}`);
         $('#loading-tab2').css("display", "none");
         $('#tab2-s').css("display", "inline-block");
     },
