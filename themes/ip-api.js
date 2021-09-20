@@ -1,7 +1,8 @@
 jQuery(document).ready(function($) {
-
+    
+var ip = ''; // Current IP
 $.ajax({
-    url: "https://ipwhois.app/json/",
+    url: 'https://ipwhois.app/json/'+ ip,
     async: true,
     type: "GET",
     success: function(data, status, xhr) {
