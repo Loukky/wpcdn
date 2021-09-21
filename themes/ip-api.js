@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
-    
-var ip = ''; // Current IP
+  $.getJSON("https://api.ip.sb/jsonip?callback=?",  
+function(json1){
+      var ip = (json1.ip);
 $.ajax({
     url: 'https://ipwhois.app/json/'+ ip,
     async: true,
@@ -22,4 +23,6 @@ $.ajax({
         $('#tab2-s').css("display", "inline-block");
     }
 });
+      }
+	   );
 });
