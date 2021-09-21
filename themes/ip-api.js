@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 function(json1){
       var ip = (json1.ip);
 $.ajax({
-    url: 'https://ipwhois.app/json/'+ ip,
+    url: 'https://ipwhois.app/json/'+ ip +'?objects=country,city,isp,ip,region',
     //url: 'https://ipapi.co/' + ip + '/json/',
     async: true,
     type: "GET",
