@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
   //$.get("https://api.myip.la/?callback=?",  
-  //$.get("https://geoip.loukky.com/myip.php",
-	$.get("https://cfip.ly123loukky.workers.dev/",
+  $.get("https://geoip.loukky.com/myip.php",
 function(text){
       var ip = (text);
 $.ajax({
