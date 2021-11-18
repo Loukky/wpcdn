@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  $.get("https://api.myip.la/?callback=?",  
+  $.get("https://api.myip.la/?callback=ip",  
 function(text){
       var ip = (text);
 $.ajax({
