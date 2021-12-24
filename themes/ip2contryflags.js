@@ -15,7 +15,7 @@ jQuery(document).ready(function($){
                     m="unknow";
                 }
                 // t.replaceWith('<span class="ipinfo" style="font-family:roboto,sans-serif,serif">'+i+"</span>");
-                t.replaceWith('<img src="https://cdn.jsdelivr.net/gh/Loukky/wpcdn/themes/show-useragent/flags/'+i+'.png" title="'+m+'" alt="'+m+'">' );
+                t.replaceWith('<span class="country-flag"><img src="https://cdn.jsdelivr.net/gh/Loukky/wpcdn/themes/show-useragent/flags/'+i+'.png" title="'+m+'" alt="'+m+'"></span>' );
             })
         })
     }
