@@ -299,9 +299,9 @@ class Walker_Comment extends Walker {
 		$show_pending_links = isset( $commenter['comment_author'] ) && $commenter['comment_author'];
 
 		if ( $commenter['comment_author_email'] ) {
-			$moderation_note = __( 'Your comment is awaiting moderation.' );
+			$moderation_note = __( '您的评论正等待审核.' );
 		} else {
-			$moderation_note = __( 'Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved.' );
+			$moderation_note = __( '您的评论正等待审核，这是预览，待审核通过后可见.' );
 		}
 		?>
 		<<?php echo $tag; ?> <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?> id="comment-<?php comment_ID(); ?>">
@@ -405,12 +405,15 @@ class Walker_Comment extends Walker {
 		<<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
 			<article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
 				<footer class="comment-meta">
-					<div class="comment-author vcard">
-						<?php
+				    <div class="author-image">
+				        <?php
 						if ( 0 != $args['avatar_size'] ) {
 							echo get_avatar( $comment, $args['avatar_size'] );
 						}
 						?>
+				    </div>
+					<div class="comment-author vcard">
+						
 						<?php
 						$comment_author = get_comment_author_link( $comment );
 
@@ -421,10 +424,11 @@ class Walker_Comment extends Walker {
 						printf(
 							/* translators: %s: Comment author link. */
 							__( '%s <span class="says">says:</span>' ),
-							sprintf( '<b class="fn">%s</b>', $comment_author )
+							sprintf( '<p class="fn">%s</p>', $comment_author )
 						);
 						?>
-												<?php 
+						
+						<?php 
 						 if($comment->user_id == 1) {
         echo ' <span style="font-size: 16px; font-weight:bold; color:#f90000">[博主]</span>'; 
     }  
@@ -451,6 +455,7 @@ echo '<span class="vfhkyipquery" data-ip="' . $ip . '">正在查询</span>';
 
 ?>
 <p class="br"></p>
+
 					</div><!-- .comment-author -->
 
 					<div class="comment-metadata">
@@ -461,7 +466,9 @@ echo '<span class="vfhkyipquery" data-ip="' . $ip . '">正在查询</span>';
 									printf( __( '%1$s at %2$s' ), get_comment_date( '', $comment ), get_comment_time() );
 								?>
 							</time>
+							
 						</a>
+					
 						<?php edit_comment_link( __( 'Edit' ), '<span class="edit-link">', '</span>' ); ?>
 					</div><!-- .comment-metadata -->
 
