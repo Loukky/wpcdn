@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
 $.ajax({
-    url: "https://api.myip.la/cn?json",
+    url: "https://api.myip.la/cn?jsonp",
     async: true,
     type: "GET",
     success: function(data, status, xhr) {
