@@ -20,6 +20,5 @@ $.ajax({
         $('#tab3-s').css("display", "inline-block");
     }
 });
-      }
-	   );
-});
+  }
+ );
