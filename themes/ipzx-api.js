@@ -8,7 +8,7 @@ $.ajax({
         $('#userremotoip-c').html(data.myip);
         $('#userremotolocation-c').html(`${data.data.location}`);
         //if(data.city) $('#userlocation-c').html(`${data.city} , ${data.region} , ${data.country} , ${data.isp}`);
-        else $("#userremotoip").css("display", "none");
+        //else $("#userremotoip").css("display", "none");
         $('#loading-tab3').css("display", "none");
         $('#tab3-s').css("display", "inline-block");
     },
