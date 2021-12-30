@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
     function userremotoip(){
         $(".userremotoip").each(function(){
-            var c=$.trim(atob($(this).attr("remoto-ip"))),t=$(this),i="",m="";
+            var c=$.trim($(this).attr("remoto-ip")),t=$(this),i="",m="";
             $.getScript("https://ip.zxinc.org/api.php?type=js&ip="+c,function(){
                 if(returnIpData.code===0){
                     var i=returnIpData.data.location;
