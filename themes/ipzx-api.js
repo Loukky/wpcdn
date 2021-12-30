@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
             $.getScript("https://ip.zxinc.org/api.php?type=js&ip="+c,function(){
                 if(returnIpData.code===0){
                     var i=returnIpData.data.location;
-					var m=returnIpData.data.myip;
+					var m=returnIpData.data.ip.query;
                 //  i+=h;
 				//	m+=n;
                    
