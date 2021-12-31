@@ -25,7 +25,7 @@ if (!hs) {
 			number: '共%2张图,当前是第%1张',
             restoreTitle: '单击以关闭图像，单击并拖动以移动。使用箭头键进行下一个和上一个.'
         },
-        graphicsDir: 'https://cdn.jsdelivr.net/gh/Loukky/wpcdn/themes/graphics/',
+        graphicsDir: 'highslide/graphics/',
         expandCursor: 'zoomin.cur',
         restoreCursor: 'zoomout.cur',
         expandDuration: 250,
