@@ -400,6 +400,19 @@ if (!hs) {
                 hsId: 'hsId' + hs.idCounter++
             }))
         },
+        addSlideshow: function(options) {
+            var sg = options.slideshowGroup;
+            if (typeof sg == 'object') {
+                for (var i = 0; i < sg.length; i++) {
+                    var o = {};
+                    for (var x in options) o[x] = options[x];
+                    o.slideshowGroup = sg[i];
+                    hs.push(hs.slideshows, o)
+                }
+            } else {
+                hs.push(hs.slideshows, options)
+            }
+        },
         getWrapperKey: function(element, expOnly) {
             var el, re = /^highslide-wrapper-([0-9]+)$/;
             el = element;
