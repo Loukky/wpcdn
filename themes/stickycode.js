@@ -1,7 +1,7 @@
   jQuery(document).ready(function() {
     jQuery('#secondary').theiaStickySidebar({
       // Settings
-      additionalMarginTop: 80
+      additionalMarginTop: 60
       //defaultPosition:fixed
     });
   });
