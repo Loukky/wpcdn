@@ -1,14 +1,6 @@
-/** 
- * Name:    Highslide JS
- * Version: 5.0.0 (2016-05-24)
- * Config:  default +inline +ajax +iframe +flash +packed
- * Author:  Torstein HÃ¸nsi
- * Support: www.highslide.com/support
- * License: MIT
- */
 if (!hs) {
     var hs = {
-        lang: {
+ lang: {
             cssDirection: 'ltr',
             loadingText: '正在加载中...',
             loadingTitle: '点击关闭',
@@ -30,9 +22,10 @@ if (!hs) {
             nextTitle: '下一张 (快捷键 →)',
             moveTitle: '移动',
             fullExpandText: '1:1',
+			number: '共%2张图,当前是第%1张',
             restoreTitle: '单击以关闭图像，单击并拖动以移动。使用箭头键进行下一个和上一个.'
         },
-        graphicsDir: 'highslide/graphics/',
+        graphicsDir: 'https://cdn.jsdelivr.net/gh/Loukky/wpcdn/themes/graphics/',
         expandCursor: 'zoomin.cur',
         restoreCursor: 'zoomout.cur',
         expandDuration: 250,
@@ -51,27 +44,30 @@ if (!hs) {
         fullExpandPosition: 'bottom right',
         fullExpandOpacity: 1,
         showCredits: true,
-        creditsHref: 'http://highslide.com/',
-        creditsTarget: '_self',
+        creditsHref: 'http://www.wmtimes.cn/',
+        creditsTarget: '_blank',
         enableKeyListener: true,
         openerTagNames: ['a'],
-        allowWidthReduction: false,
-        allowHeightReduction: true,
-        preserveContent: true,
-        objectLoadTime: 'before',
-        cacheAjax: true,
+        transitions: [],
+        transitionDuration: 250,
+        dimmingOpacity: 0,
+        dimmingDuration: 50,
+        anchor: 'auto',
+        align: 'auto',
+        targetX: null,
+        targetY: null,
         dragByHeading: true,
         minWidth: 200,
         minHeight: 200,
         allowSizeReduction: true,
         outlineType: 'drop-shadow',
         skin: {
-            contentWrapper: '<div class="highslide-header"><ul>' + '<li class="highslide-previous">' + '<a href="#" title="{hs.lang.previousTitle}" onclick="return hs.previous(this)">' + '<span>{hs.lang.previousText}</span></a>' + '</li>' + '<li class="highslide-next">' + '<a href="#" title="{hs.lang.nextTitle}" onclick="return hs.next(this)">' + '<span>{hs.lang.nextText}</span></a>' + '</li>' + '<li class="highslide-move">' + '<a href="#" title="{hs.lang.moveTitle}" onclick="return false">' + '<span>{hs.lang.moveText}</span></a>' + '</li>' + '<li class="highslide-close">' + '<a href="#" title="{hs.lang.closeTitle}" onclick="return hs.close(this)">' + '<span>{hs.lang.closeText}</span></a>' + '</li>' + '</ul></div>' + '<div class="highslide-body"></div>' + '<div class="highslide-footer"><div>' + '<span class="highslide-resize" title="{hs.lang.resizeTitle}"><span></span></span>' + '</div></div>'
+            controls: '<div class="highslide-controls"><ul>' + '<li class="highslide-previous">' + '<a href="#" title="{hs.lang.previousTitle}">' + '<span>{hs.lang.previousText}</span></a>' + '</li>' + '<li class="highslide-play">' + '<a href="#" title="{hs.lang.playTitle}">' + '<span>{hs.lang.playText}</span></a>' + '</li>' + '<li class="highslide-pause">' + '<a href="#" title="{hs.lang.pauseTitle}">' + '<span>{hs.lang.pauseText}</span></a>' + '</li>' + '<li class="highslide-next">' + '<a href="#" title="{hs.lang.nextTitle}">' + '<span>{hs.lang.nextText}</span></a>' + '</li>' + '<li class="highslide-move">' + '<a href="#" title="{hs.lang.moveTitle}">' + '<span>{hs.lang.moveText}</span></a>' + '</li>' + '<li class="highslide-full-expand">' + '<a href="#" title="{hs.lang.fullExpandTitle}">' + '<span>{hs.lang.fullExpandText}</span></a>' + '</li>' + '<li class="highslide-close">' + '<a href="#" title="{hs.lang.closeTitle}" >' + '<span>{hs.lang.closeText}</span></a>' + '</li>' + '</ul></div>'
         },
         preloadTheseImages: [],
         continuePreloading: true,
         expanders: [],
-        overrides: ['allowSizeReduction', 'useBox', 'outlineType', 'outlineWhileAnimating', 'captionId', 'captionText', 'captionEval', 'captionOverlay', 'headingId', 'headingText', 'headingEval', 'headingOverlay', 'creditsPosition', 'dragByHeading', 'width', 'height', 'contentId', 'allowWidthReduction', 'allowHeightReduction', 'preserveContent', 'maincontentId', 'maincontentText', 'maincontentEval', 'objectType', 'cacheAjax', 'objectWidth', 'objectHeight', 'objectLoadTime', 'swfOptions', 'wrapperClassName', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight', 'pageOrigin', 'slideshowGroup', 'easing', 'easingClose', 'fadeInOut', 'src'],
+        overrides: ['allowSizeReduction', 'useBox', 'anchor', 'align', 'targetX', 'targetY', 'outlineType', 'outlineWhileAnimating', 'captionId', 'captionText', 'captionEval', 'captionOverlay', 'headingId', 'headingText', 'headingEval', 'headingOverlay', 'creditsPosition', 'dragByHeading', 'autoplay', 'numberPosition', 'transitions', 'dimmingOpacity', 'width', 'height', 'wrapperClassName', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight', 'pageOrigin', 'slideshowGroup', 'easing', 'easingClose', 'fadeInOut', 'src'],
         overlays: [],
         idCounter: 0,
         oPos: {
@@ -81,20 +77,12 @@ if (!hs) {
         mouse: {},
         headingOverlay: {},
         captionOverlay: {},
-        swfOptions: {
-            flashvars: {},
-            params: {},
-            attributes: {}
-        },
         timers: [],
+        slideshows: [],
         pendingOutlines: {},
-        sleeping: [],
-        preloadTheseAjax: [],
-        cacheBindings: [],
-        cachedGets: {},
         clones: {},
         onReady: [],
-        uaVersion: document.documentMode || parseFloat((navigator.userAgent.toLowerCase().match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
+        uaVersion: /Trident\/4\.0/.test(navigator.userAgent) ? 8 : parseFloat((navigator.userAgent.toLowerCase().match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
         ie: (document.all && !window.opera),
         safari: /Safari/.test(navigator.userAgent),
         geckoMac: /Macintosh.+rv:1\.[0-8].+Gecko/.test(navigator.userAgent),
@@ -122,7 +110,7 @@ if (!hs) {
         },
         setStyles: function(el, styles) {
             for (var x in styles) {
-                if (hs.ieLt9 && x == 'opacity') {
+                if (hs.ie && x == 'opacity') {
                     if (styles[x] > 0.99) el.style.removeAttribute('filter');
                     else el.style.filter = 'alpha(opacity=' + (styles[x] * 100) + ')'
                 } else el.style[x] = styles[x]
@@ -168,15 +156,14 @@ if (!hs) {
         getPageSize: function() {
             var d = document,
                 w = window,
-                iebody = d.compatMode && d.compatMode != 'BackCompat' ? d.documentElement : d.body,
-                ieLt9 = hs.ie && (hs.uaVersion < 9 || typeof pageXOffset == 'undefined');
-            var width = ieLt9 ? iebody.clientWidth : (d.documentElement.clientWidth || self.innerWidth),
-                height = ieLt9 ? iebody.clientHeight : self.innerHeight;
+                iebody = d.compatMode && d.compatMode != 'BackCompat' ? d.documentElement : d.body;
+            var width = hs.ie ? iebody.clientWidth : (d.documentElement.clientWidth || self.innerWidth),
+                height = hs.ie ? iebody.clientHeight : self.innerHeight;
             hs.page = {
                 width: width,
                 height: height,
-                scrollLeft: ieLt9 ? iebody.scrollLeft : pageXOffset,
-                scrollTop: ieLt9 ? iebody.scrollTop : pageYOffset
+                scrollLeft: hs.ie ? iebody.scrollLeft : pageXOffset,
+                scrollTop: hs.ie ? iebody.scrollTop : pageYOffset
             };
             return hs.page
         },
@@ -201,31 +188,12 @@ if (!hs) {
                 display: 'none'
             }, hs.container);
             if (typeof a.getParams == 'function') return params;
-            if (type == 'html') {
-                for (var i = 0; i < hs.sleeping.length; i++) {
-                    if (hs.sleeping[i] && hs.sleeping[i].a == a) {
-                        hs.sleeping[i].awake();
-                        hs.sleeping[i] = null;
-                        return false
-                    }
-                }
-                hs.hasHtmlExpanders = true
-            }
             try {
-                new hs.Expander(a, params, custom, type);
+                new hs.Expander(a, params, custom);
                 return false
             } catch (e) {
                 return true
             }
-        },
-        htmlExpand: function(a, params, custom) {
-            return hs.expand(a, params, custom, 'html')
-        },
-        getSelfRendered: function() {
-            return hs.createElement('div', {
-                className: 'highslide-html-content',
-                innerHTML: hs.replaceLang(hs.skin.contentWrapper)
-            })
         },
         getElementByClass: function(el, tagName, className) {
             var els = el.getElementsByTagName(tagName);
@@ -247,37 +215,6 @@ if (!hs) {
                     if (typeof hs.lang[lang] != 'undefined') s = s.replace(matches[i], hs.lang[lang])
                 }
             return s
-        },
-        getCacheBinding: function(a) {
-            for (var i = 0; i < hs.cacheBindings.length; i++) {
-                if (hs.cacheBindings[i][0] == a) {
-                    var c = hs.cacheBindings[i][1];
-                    hs.cacheBindings[i][1] = c.cloneNode(1);
-                    return c
-                }
-            }
-            return null
-        },
-        preloadAjax: function(e) {
-            var arr = hs.getAnchors();
-            for (var i = 0; i < arr.htmls.length; i++) {
-                var a = arr.htmls[i];
-                if (hs.getParam(a, 'objectType') == 'ajax' && hs.getParam(a, 'cacheAjax')) hs.push(hs.preloadTheseAjax, a)
-            }
-            hs.preloadAjaxElement(0)
-        },
-        preloadAjaxElement: function(i) {
-            if (!hs.preloadTheseAjax[i]) return;
-            var a = hs.preloadTheseAjax[i];
-            var cache = hs.getNode(hs.getParam(a, 'contentId'));
-            if (!cache) cache = hs.getSelfRendered();
-            var ajax = new hs.Ajax(a, cache, 1);
-            ajax.onError = function() {};
-            ajax.onLoad = function() {
-                hs.push(hs.cacheBindings, [a, cache]);
-                hs.preloadAjaxElement(i + 1)
-            };
-            ajax.run()
         },
         focusTopmost: function() {
             var topZ = 0,
@@ -326,6 +263,40 @@ if (!hs) {
             if (d) hs.garbageBin.appendChild(d);
             hs.garbageBin.innerHTML = ''
         },
+        dim: function(exp) {
+            if (!hs.dimmer) {
+                hs.dimmer = hs.createElement('div', {
+                    className: 'highslide-dimming highslide-viewport-size',
+                    owner: '',
+                    onclick: function() {
+                        hs.close()
+                    }
+                }, {
+                    visibility: 'visible',
+                    opacity: 0
+                }, hs.container, true)
+            }
+            hs.dimmer.style.display = '';
+            hs.dimmer.owner += '|' + exp.key;
+            if (hs.geckoMac && hs.dimmingGeckoFix) hs.setStyles(hs.dimmer, {
+                background: 'url(' + hs.graphicsDir + 'geckodimmer.png)',
+                opacity: 1
+            });
+            else hs.animate(hs.dimmer, {
+                opacity: exp.dimmingOpacity
+            }, hs.dimmingDuration)
+        },
+        undim: function(key) {
+            if (!hs.dimmer) return;
+            if (typeof key != 'undefined') hs.dimmer.owner = hs.dimmer.owner.replace('|' + key, '');
+            if ((typeof key != 'undefined' && hs.dimmer.owner != '') || (hs.upcoming && hs.getParam(hs.upcoming, 'dimmingOpacity'))) return;
+            if (hs.geckoMac && hs.dimmingGeckoFix) hs.dimmer.style.display = 'none';
+            else hs.animate(hs.dimmer, {
+                opacity: 0
+            }, hs.dimmingDuration, null, function() {
+                hs.dimmer.style.display = 'none'
+            })
+        },
         transit: function(adj, exp) {
             var last = exp || hs.getExpander();
             exp = last;
@@ -339,7 +310,7 @@ if (!hs) {
                 hs.last = hs.upcoming = null
             }
             try {
-                exp.close()
+                if (!adj || exp.transitions[1] != 'crossfade') exp.close()
             } catch (e) {}
             return false
         },
@@ -365,6 +336,8 @@ if (!hs) {
                     if (exp) exp.doFullExpand();
                     return true;
                 case 32:
+                    op = 2;
+                    break;
                 case 34:
                 case 39:
                 case 40:
@@ -387,7 +360,10 @@ if (!hs) {
                 else e.returnValue = false; if (exp) {
                     if (op == 0) {
                         exp.close()
+                    } else if (op == 2) {
+                        if (exp.slideshow) exp.slideshow.hitSpace()
                     } else {
+                        if (exp.slideshow) exp.slideshow.pause();
                         hs.previousOrNext(exp.key, op)
                     }
                     return false
@@ -417,6 +393,7 @@ if (!hs) {
             var el, re = /^highslide-wrapper-([0-9]+)$/;
             el = element;
             while (el.parentNode) {
+                if (el.hsKey !== undefined) return el.hsKey;
                 if (el.id && re.test(el.id)) return el.id.replace(re, "$1");
                 el = el.parentNode
             }
@@ -478,9 +455,6 @@ if (!hs) {
                         hs.hasFocused = true
                     }
                     return false
-                } else if (/highslide-html/.test(el.className) && hs.focusKey != exp.key) {
-                    exp.focus();
-                    exp.doShowHide('hidden')
                 }
             } else if (e.type == 'mouseup') {
                 hs.removeEventListener(document, 'mousemove', hs.dragHandler);
@@ -492,7 +466,6 @@ if (!hs) {
                     } else if (hasDragged || (!hasDragged && hs.hasHtmlExpanders)) {
                         hs.dragArgs.exp.doShowHide('hidden')
                     }
-                    if (hs.dragArgs.exp.releaseMask) hs.dragArgs.exp.releaseMask.style.display = 'none';
                     hs.hasFocused = false;
                     hs.dragArgs = null
                 } else if (/highslide-image-blur/.test(el.className)) {
@@ -506,19 +479,6 @@ if (!hs) {
             if (!e) e = window.event;
             var a = hs.dragArgs,
                 exp = a.exp;
-            if (exp.iframe) {
-                if (!exp.releaseMask) exp.releaseMask = hs.createElement('div', null, {
-                    position: 'absolute',
-                    width: exp.x.size + 'px',
-                    height: exp.y.size + 'px',
-                    left: exp.x.cb + 'px',
-                    top: exp.y.cb + 'px',
-                    zIndex: 4,
-                    background: (hs.ieLt9 ? 'white' : 'none'),
-                    opacity: 0.01
-                }, exp.wrapper, true);
-                if (exp.releaseMask.style.display == 'none') exp.releaseMask.style.display = ''
-            }
             a.dX = e.clientX - a.clickX;
             a.dY = e.clientY - a.clickY;
             var distance = Math.sqrt(Math.pow(a.dX, 2) + Math.pow(a.dY, 2));
@@ -537,7 +497,7 @@ if (!hs) {
                 if (!e) e = window.event;
                 var over = /mouseover/i.test(e.type);
                 if (!e.target) e.target = e.srcElement;
-                if (!e.relatedTarget) e.relatedTarget = over ? e.fromElement : e.toElement;
+                if (hs.ie) e.relatedTarget = over ? e.fromElement : e.toElement;
                 var exp = hs.getExpander(e.target);
                 if (!exp.isExpanded) return;
                 if (!exp || !e.relatedTarget || hs.getExpander(e.relatedTarget, true) == exp || hs.dragArgs) return;
@@ -606,10 +566,8 @@ if (!hs) {
         },
         init: function() {
             if (!hs.container) {
-                hs.ieLt7 = hs.ie && hs.uaVersion < 7;
-                hs.ieLt9 = hs.ie && hs.uaVersion < 9;
                 hs.getPageSize();
-                hs.ie6SSL = hs.ieLt7 && location.protocol == 'https:';
+                hs.ieLt7 = hs.ie && hs.uaVersion < 7;
                 for (var x in hs.langDefaults) {
                     if (typeof hs[x] != 'undefined') hs.lang[x] = hs[x];
                     else if (typeof hs.lang[x] == 'undefined' && typeof hs.langDefaults[x] != 'undefined') hs.lang[x] = hs.langDefaults[x]
@@ -638,18 +596,22 @@ if (!hs) {
                 hs.garbageBin = hs.createElement('div', null, {
                     display: 'none'
                 }, hs.container);
-                hs.clearing = hs.createElement('div', null, {
-                    clear: 'both',
-                    paddingTop: '1px'
-                }, null, true);
+                hs.viewport = hs.createElement('div', {
+                    className: 'highslide-viewport highslide-viewport-size'
+                }, {
+                    visibility: (hs.safari && hs.uaVersion < 525) ? 'visible' : 'hidden'
+                }, hs.container, 1);
                 Math.linearTween = function(t, b, c, d) {
                     return c * t / d + b
                 };
                 Math.easeInQuad = function(t, b, c, d) {
                     return c * (t /= d) * t + b
                 };
+                Math.easeOutQuad = function(t, b, c, d) {
+                    return -c * (t /= d) * (t - 2) + b
+                };
                 hs.hideSelects = hs.ieLt7;
-                hs.hideIframes = ((window.opera && hs.uaVersion < 9) || navigator.vendor == 'KDE' || (hs.ieLt7 && hs.uaVersion < 5.5))
+                hs.hideIframes = ((window.opera && hs.uaVersion < 9) || navigator.vendor == 'KDE' || (hs.ie && hs.uaVersion < 5.5))
             }
         },
         ready: function() {
@@ -660,7 +622,6 @@ if (!hs) {
         updateAnchors: function() {
             var el, els, all = [],
                 images = [],
-                htmls = [],
                 groups = {},
                 re;
             for (var i = 0; i < hs.openerTagNames.length; i++) {
@@ -671,7 +632,6 @@ if (!hs) {
                     if (re) {
                         hs.push(all, el);
                         if (re[0] == 'hs.expand') hs.push(images, el);
-                        else if (re[0] == 'hs.htmlExpand') hs.push(htmls, el);
                         var g = hs.getParam(el, 'slideshowGroup') || 'none';
                         if (!groups[g]) groups[g] = [];
                         hs.push(groups[g], el)
@@ -681,8 +641,7 @@ if (!hs) {
             hs.anchors = {
                 all: all,
                 groups: groups,
-                images: images,
-                htmls: htmls
+                images: images
             };
             return hs.anchors
         },
@@ -774,7 +733,7 @@ if (!hs) {
         this.outlineType = outlineType;
         var v = hs.uaVersion,
             tr;
-        this.hasAlphaImageLoader = hs.ie && hs.uaVersion < 7;
+        this.hasAlphaImageLoader = hs.ie && v >= 5.5 && v < 7;
         if (!outlineType) {
             if (onLoad) onLoad();
             return
@@ -911,6 +870,8 @@ if (!hs) {
             switch (key) {
                 case 'loadingPos':
                     return this.tpos + this.tb + (this.t - hs.loading['offset' + this.ucwh]) / 2;
+                case 'loadingPosXfade':
+                    return this.pos + this.cb + this.p1 + (this.size - hs.loading['offset' + this.ucwh]) / 2;
                 case 'wsize':
                     return this.size + 2 * this.cb + this.p1 + this.p2;
                 case 'fitsize':
@@ -940,6 +901,9 @@ if (!hs) {
         calcExpanded: function() {
             var exp = this.exp;
             this.justify = 'auto';
+            if (exp.align == 'center') this.justify = 'center';
+            else if (new RegExp(this.lt).test(exp.anchor)) this.justify = null;
+            else if (new RegExp(this.rb).test(exp.anchor)) this.justify = 'max';
             this.pos = this.tpos - this.cb + this.tb;
             if (this.maxHeight && this.dim == 'x') exp.maxWidth = Math.min(exp.maxWidth || this.full, exp.maxHeight * this.full / exp.y.full);
             this.size = Math.min(this.full, exp['max' + this.ucwh] || this.full);
@@ -949,6 +913,7 @@ if (!hs) {
                 this.imgSize = this.full
             }
             if (this.dim == 'x' && hs.padToMinWidth) this.minSize = exp.minWidth;
+            this.target = exp['target' + this.dim.toUpperCase()];
             this.marginMin = hs['margin' + this.uclt];
             this.scroll = hs.page['scroll' + this.uclt];
             this.clientSize = hs.page[this.wh]
@@ -963,18 +928,11 @@ if (!hs) {
             exp.content.style[this.wh] = i + 'px';
             exp.wrapper.style[this.wh] = this.get('wsize') + 'px';
             if (exp.outline) exp.outline.setPosition();
-            if (exp.releaseMask) exp.releaseMask.style[this.wh] = i + 'px';
-            if (this.dim == 'y' && exp.iDoc && exp.body.style.height != 'auto') try {
-                exp.iDoc.body.style.overflow = 'auto'
-            } catch (e) {}
-            if (exp.isHtml) {
-                var d = exp.scrollerDiv;
-                if (this.sizeDiff === undefined) this.sizeDiff = exp.innerContent['offset' + this.ucwh] - d['offset' + this.ucwh];
-                d.style[this.wh] = (this.size - this.sizeDiff) + 'px';
-                if (this.dim == 'x') exp.mediumContent.style.width = 'auto';
-                if (exp.body) exp.body.style[this.wh] = 'auto'
+            if (this.dim == 'x' && exp.overlayBox) exp.sizeOverlayBox(true);
+            if (this.dim == 'x' && exp.slideshow && exp.isImage) {
+                if (i == this.full) exp.slideshow.disable('full-expand');
+                else exp.slideshow.enable('full-expand')
             }
-            if (this.dim == 'x' && exp.overlayBox) exp.sizeOverlayBox(true)
         },
         setPos: function(i) {
             this.pos = i;
@@ -992,10 +950,11 @@ if (!hs) {
         this.a = a;
         this.custom = custom;
         this.contentType = contentType || 'image';
-        this.isHtml = (contentType == 'html');
         this.isImage = !this.isHtml;
         hs.continuePreloading = false;
         this.overlays = [];
+        this.last = hs.last;
+        hs.last = null;
         hs.init();
         var key = this.key = hs.expanders.length;
         for (var i = 0; i < hs.overrides.length; i++) {
@@ -1007,7 +966,7 @@ if (!hs) {
         el = this.thumb = el.getElementsByTagName('img')[0] || el;
         this.thumbsUserSetId = el.id || a.id;
         for (var i = 0; i < hs.expanders.length; i++) {
-            if (hs.expanders[i] && hs.expanders[i].a == a) {
+            if (hs.expanders[i] && hs.expanders[i].a == a && !(this.last && this.transitions[1] == 'crossfade')) {
                 hs.expanders[i].focus();
                 return false
             }
@@ -1040,7 +999,7 @@ if (!hs) {
         }, null, true);
         this.wrapper.onmouseover = this.wrapper.onmouseout = hs.wrapperMouseHandler;
         if (this.contentType == 'image' && this.outlineWhileAnimating == 2) this.outlineWhileAnimating = 0;
-        if (!this.outlineType) {
+        if (!this.outlineType || (this.last && this.isImage && this.transitions[1] == 'crossfade')) {
             this[this.contentType + 'Create']()
         } else if (hs.pendingOutlines[this.outlineType]) {
             this.connectOutline();
@@ -1076,6 +1035,12 @@ if (!hs) {
             var exp = this,
                 l = this.x.get('loadingPos') + 'px',
                 t = this.y.get('loadingPos') + 'px';
+            if (!tgt && this.last && this.transitions[1] == 'crossfade') var tgt = this.last;
+            if (tgt) {
+                l = tgt.x.get('loadingPosXfade') + 'px';
+                t = tgt.y.get('loadingPosXfade') + 'px';
+                this.loading.style.zIndex = hs.zIndexCounter++
+            }
             setTimeout(function() {
                 if (exp.loading) hs.setStyles(exp.loading, {
                     left: l,
@@ -1108,60 +1073,6 @@ if (!hs) {
             img.src = this.src;
             this.showLoading()
         },
-        htmlCreate: function() {
-            this.content = hs.getCacheBinding(this.a);
-            if (!this.content) this.content = hs.getNode(this.contentId);
-            if (!this.content) this.content = hs.getSelfRendered();
-            this.getInline(['maincontent']);
-            if (this.maincontent) {
-                var body = hs.getElementByClass(this.content, 'div', 'highslide-body');
-                if (body) body.appendChild(this.maincontent);
-                this.maincontent.style.display = 'block'
-            }
-            var innerContent = this.innerContent = this.content;
-            if (/(swf|iframe)/.test(this.objectType)) this.setObjContainerSize(innerContent);
-            hs.container.appendChild(this.wrapper);
-            hs.setStyles(this.wrapper, {
-                position: 'static',
-                padding: '0 ' + hs.marginRight + 'px 0 ' + hs.marginLeft + 'px'
-            });
-            this.content = hs.createElement('div', {
-                className: 'highslide-html'
-            }, {
-                position: 'relative',
-                zIndex: 3,
-                height: 0,
-                overflow: 'hidden'
-            }, this.wrapper);
-            this.mediumContent = hs.createElement('div', null, null, this.content, 1);
-            this.mediumContent.appendChild(innerContent);
-            hs.setStyles(innerContent, {
-                position: 'relative',
-                display: 'block',
-                direction: hs.lang.cssDirection || ''
-            });
-            if (this.width) innerContent.style.width = this.width + 'px';
-            if (this.height) hs.setStyles(innerContent, {
-                height: this.height + 'px',
-                overflow: 'hidden'
-            });
-            if (innerContent.offsetWidth < this.minWidth) innerContent.style.width = this.minWidth + 'px';
-            if (this.objectType == 'ajax' && !hs.getCacheBinding(this.a)) {
-                this.showLoading();
-                var exp = this;
-                var ajax = new hs.Ajax(this.a, innerContent);
-                ajax.src = this.src;
-                ajax.onLoad = function() {
-                    if (hs.expanders[exp.key]) exp.contentLoaded()
-                };
-                ajax.onError = function() {
-                    location.href = exp.src
-                };
-                ajax.run()
-            } else if (this.objectType == 'iframe' && this.objectLoadTime == 'before') {
-                this.writeExtendedContent()
-            } else this.contentLoaded()
-        },
         contentLoaded: function() {
             try {
                 if (!this.content) return;
@@ -1176,33 +1087,47 @@ if (!hs) {
                     });
                     this.loading = null
                 }
-                if (this.isImage) {
-                    x.full = this.content.width;
-                    y.full = this.content.height;
-                    hs.setStyles(this.content, {
-                        width: x.t + 'px',
-                        height: y.t + 'px'
-                    });
-                    this.wrapper.appendChild(this.content);
-                    hs.container.appendChild(this.wrapper)
-                } else if (this.htmlGetSize) this.htmlGetSize();
+                x.full = this.content.width;
+                y.full = this.content.height;
+                hs.setStyles(this.content, {
+                    width: x.t + 'px',
+                    height: y.t + 'px'
+                });
+                this.wrapper.appendChild(this.content);
+                hs.container.appendChild(this.wrapper);
                 x.calcBorders();
                 y.calcBorders();
                 hs.setStyles(this.wrapper, {
                     left: (x.tpos + x.tb - x.cb) + 'px',
                     top: (y.tpos + x.tb - y.cb) + 'px'
                 });
+                this.initSlideshow();
                 this.getOverlays();
                 var ratio = x.full / y.full;
                 x.calcExpanded();
                 this.justify(x);
                 y.calcExpanded();
                 this.justify(y);
-                if (this.isHtml) this.htmlSizeOperations();
                 if (this.overlayBox) this.sizeOverlayBox(0, 1);
                 if (this.allowSizeReduction) {
-                    if (this.isImage) this.correctRatio(ratio);
-                    else this.fitOverlayBox(); if (this.isImage && this.x.full > (this.x.imgSize || this.x.size)) {
+                    this.correctRatio(ratio);
+                    var ss = this.slideshow;
+                    if (ss && this.last && ss.controls && ss.fixedControls) {
+                        var pos = ss.overlayOptions.position || '',
+                            p;
+                        for (var dim in hs.oPos)
+                            for (var i = 0; i < 5; i++) {
+                                p = this[dim];
+                                if (pos.match(hs.oPos[dim][i])) {
+                                    p.pos = this.last[dim].pos + (this.last[dim].p1 - p.p1) + (this.last[dim].size - p.size) * [0, 0, .5, 1, 1][i];
+                                    if (ss.fixedControls == 'fit') {
+                                        if (p.pos + p.size + p.p1 + p.p2 > p.scroll + p.clientSize - p.marginMax) p.pos = p.scroll + p.clientSize - p.size - p.marginMin - p.marginMax - p.p1 - p.p2;
+                                        if (p.pos < p.scroll + p.marginMin) p.pos = p.scroll + p.marginMin
+                                    }
+                                }
+                            }
+                    }
+                    if (this.isImage && this.x.full > (this.x.imgSize || this.x.size)) {
                         this.createFullExpand();
                         if (this.overlays.length == 1) this.sizeOverlayBox()
                     }
@@ -1212,169 +1137,45 @@ if (!hs) {
                 this.error(e)
             }
         },
-        setObjContainerSize: function(parent, auto) {
-            var c = hs.getElementByClass(parent, 'DIV', 'highslide-body');
-            if (/(iframe|swf)/.test(this.objectType)) {
-                if (this.objectWidth) c.style.width = this.objectWidth + 'px';
-                if (this.objectHeight) c.style.height = this.objectHeight + 'px'
-            }
-        },
-        writeExtendedContent: function() {
-            if (this.hasExtendedContent) return;
-            var exp = this;
-            this.body = hs.getElementByClass(this.innerContent, 'DIV', 'highslide-body');
-            if (this.objectType == 'iframe') {
-                this.showLoading();
-                var ruler = hs.clearing.cloneNode(1);
-                this.body.appendChild(ruler);
-                this.newWidth = this.innerContent.offsetWidth;
-                if (!this.objectWidth) this.objectWidth = ruler.offsetWidth;
-                var hDiff = this.innerContent.offsetHeight - this.body.offsetHeight,
-                    h = this.objectHeight || hs.page.height - hDiff - hs.marginTop - hs.marginBottom,
-                    onload = this.objectLoadTime == 'before' ? ' onload="if (hs.expanders[' + this.key + ']) hs.expanders[' + this.key + '].contentLoaded()" ' : '';
-                this.body.innerHTML += '<iframe name="hs' + (new Date()).getTime() + '" frameborder="0" key="' + this.key + '" ' + ' style="width:' + this.objectWidth + 'px; height:' + h + 'px" ' + onload + ' src="' + this.src + '" allowfullscreen></iframe>';
-                this.ruler = this.body.getElementsByTagName('div')[0];
-                this.iframe = this.body.getElementsByTagName('iframe')[0];
-                if (this.objectLoadTime == 'after') this.correctIframeSize()
-            }
-            if (this.objectType == 'swf') {
-                this.body.id = this.body.id || 'hs-flash-id-' + this.key;
-                var a = this.swfOptions;
-                if (!a.params) a.params = {};
-                if (typeof a.params.wmode == 'undefined') a.params.wmode = 'transparent';
-                if (swfobject) swfobject.embedSWF(this.src, this.body.id, this.objectWidth, this.objectHeight, a.version || '7', a.expressInstallSwfurl, a.flashvars, a.params, a.attributes)
-            }
-            this.hasExtendedContent = true
-        },
-        htmlGetSize: function() {
-            if (this.iframe && !this.objectHeight) {
-                this.iframe.style.height = this.body.style.height = this.getIframePageHeight() + 'px'
-            }
-            this.innerContent.appendChild(hs.clearing);
-            if (!this.x.full) this.x.full = this.innerContent.offsetWidth;
-            this.y.full = this.innerContent.offsetHeight;
-            this.innerContent.removeChild(hs.clearing);
-            if (hs.ie && this.newHeight > parseInt(this.innerContent.currentStyle.height)) {
-                this.newHeight = parseInt(this.innerContent.currentStyle.height)
-            }
-            hs.setStyles(this.wrapper, {
-                position: 'absolute',
-                padding: '0'
-            });
-            hs.setStyles(this.content, {
-                width: this.x.t + 'px',
-                height: this.y.t + 'px'
-            })
-        },
-        getIframePageHeight: function() {
-            var h;
-            try {
-                var doc = this.iDoc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-                var clearing = doc.createElement('div');
-                clearing.style.clear = 'both';
-                doc.body.appendChild(clearing);
-                h = clearing.offsetTop;
-                if (hs.ie) h += parseInt(doc.body.currentStyle.marginTop) + parseInt(doc.body.currentStyle.marginBottom) - 1
-            } catch (e) {
-                h = 300
-            }
-            return h
-        },
-        correctIframeSize: function() {
-            var wDiff = this.innerContent.offsetWidth - this.ruler.offsetWidth;
-            hs.discardElement(this.ruler);
-            if (wDiff < 0) wDiff = 0;
-            var hDiff = this.innerContent.offsetHeight - this.iframe.offsetHeight;
-            if (this.iDoc && !this.objectHeight && !this.height && this.y.size == this.y.full) try {
-                this.iDoc.body.style.overflow = 'hidden'
-            } catch (e) {}
-            hs.setStyles(this.iframe, {
-                width: Math.abs(this.x.size - wDiff) + 'px',
-                height: Math.abs(this.y.size - hDiff) + 'px'
-            });
-            hs.setStyles(this.body, {
-                width: this.iframe.style.width,
-                height: this.iframe.style.height
-            });
-            this.scrollingContent = this.iframe;
-            this.scrollerDiv = this.scrollingContent
-        },
-        htmlSizeOperations: function() {
-            this.setObjContainerSize(this.innerContent);
-            if (this.objectType == 'swf' && this.objectLoadTime == 'before') this.writeExtendedContent();
-            if (this.x.size < this.x.full && !this.allowWidthReduction) this.x.size = this.x.full;
-            if (this.y.size < this.y.full && !this.allowHeightReduction) this.y.size = this.y.full;
-            this.scrollerDiv = this.innerContent;
-            hs.setStyles(this.mediumContent, {
-                position: 'relative',
-                width: this.x.size + 'px'
-            });
-            hs.setStyles(this.innerContent, {
-                border: 'none',
-                width: 'auto',
-                height: 'auto'
-            });
-            var node = hs.getElementByClass(this.innerContent, 'DIV', 'highslide-body');
-            if (node && !/(iframe|swf)/.test(this.objectType)) {
-                var cNode = node;
-                node = hs.createElement(cNode.nodeName, null, {
-                    overflow: 'hidden'
-                }, null, true);
-                cNode.parentNode.insertBefore(node, cNode);
-                node.appendChild(hs.clearing);
-                node.appendChild(cNode);
-                var wDiff = this.innerContent.offsetWidth - node.offsetWidth;
-                var hDiff = this.innerContent.offsetHeight - node.offsetHeight;
-                node.removeChild(hs.clearing);
-                var kdeBugCorr = hs.safari || navigator.vendor == 'KDE' ? 1 : 0;
-                hs.setStyles(node, {
-                    width: (this.x.size - wDiff - kdeBugCorr) + 'px',
-                    height: (this.y.size - hDiff) + 'px',
-                    overflow: 'auto',
-                    position: 'relative'
-                });
-                if (kdeBugCorr && cNode.offsetHeight > node.offsetHeight) {
-                    node.style.width = (parseInt(node.style.width) + kdeBugCorr) + 'px'
-                }
-                this.scrollingContent = node;
-                this.scrollerDiv = this.scrollingContent
-            }
-            if (this.iframe && this.objectLoadTime == 'before') this.correctIframeSize();
-            if (!this.scrollingContent && this.y.size < this.mediumContent.offsetHeight) this.scrollerDiv = this.content;
-            if (this.scrollerDiv == this.content && !this.allowWidthReduction && !/(iframe|swf)/.test(this.objectType)) {
-                this.x.size += 17
-            }
-            if (this.scrollerDiv && this.scrollerDiv.offsetHeight > this.scrollerDiv.parentNode.offsetHeight) {
-                setTimeout("try { hs.expanders[" + this.key + "].scrollerDiv.style.overflow = 'auto'; } catch(e) {}", hs.expandDuration)
-            }
-        },
         justify: function(p, moveOnly) {
             var tgtArr, tgt = p.target,
                 dim = p == this.x ? 'x' : 'y';
-            var hasMovedMin = false;
-            var allowReduce = p.exp.allowSizeReduction;
-            p.pos = Math.round(p.pos - ((p.get('wsize') - p.t) / 2));
-            if (p.pos < p.scroll + p.marginMin) {
-                p.pos = p.scroll + p.marginMin;
-                hasMovedMin = true
+            if (tgt && tgt.match(/ /)) {
+                tgtArr = tgt.split(' ');
+                tgt = tgtArr[0]
             }
-            if (!moveOnly && p.size < p.minSize) {
-                p.size = p.minSize;
-                allowReduce = false
-            }
-            if (p.pos + p.get('wsize') > p.scroll + p.clientSize - p.marginMax) {
-                if (!moveOnly && hasMovedMin && allowReduce) {
-                    p.size = Math.min(p.size, p.get(dim == 'y' ? 'fitsize' : 'maxsize'))
-                } else if (p.get('wsize') < p.get('fitsize')) {
-                    p.pos = p.scroll + p.clientSize - p.marginMax - p.get('wsize')
-                } else {
+            if (tgt && hs.$(tgt)) {
+                p.pos = hs.getPosition(hs.$(tgt))[dim];
+                if (tgtArr && tgtArr[1] && tgtArr[1].match(/^[-]?[0-9]+px$/)) p.pos += parseInt(tgtArr[1]);
+                if (p.size < p.minSize) p.size = p.minSize
+            } else if (p.justify == 'auto' || p.justify == 'center') {
+                var hasMovedMin = false;
+                var allowReduce = p.exp.allowSizeReduction;
+                if (p.justify == 'center') p.pos = Math.round(p.scroll + (p.clientSize + p.marginMin - p.marginMax - p.get('wsize')) / 2);
+                else p.pos = Math.round(p.pos - ((p.get('wsize') - p.t) / 2)); if (p.pos < p.scroll + p.marginMin) {
                     p.pos = p.scroll + p.marginMin;
-                    if (!moveOnly && allowReduce) p.size = p.get(dim == 'y' ? 'fitsize' : 'maxsize')
+                    hasMovedMin = true
                 }
-            }
-            if (!moveOnly && p.size < p.minSize) {
-                p.size = p.minSize;
-                allowReduce = false
+                if (!moveOnly && p.size < p.minSize) {
+                    p.size = p.minSize;
+                    allowReduce = false
+                }
+                if (p.pos + p.get('wsize') > p.scroll + p.clientSize - p.marginMax) {
+                    if (!moveOnly && hasMovedMin && allowReduce) {
+                        p.size = Math.min(p.size, p.get(dim == 'y' ? 'fitsize' : 'maxsize'))
+                    } else if (p.get('wsize') < p.get('fitsize')) {
+                        p.pos = p.scroll + p.clientSize - p.marginMax - p.get('wsize')
+                    } else {
+                        p.pos = p.scroll + p.marginMin;
+                        if (!moveOnly && allowReduce) p.size = p.get(dim == 'y' ? 'fitsize' : 'maxsize')
+                    }
+                }
+                if (!moveOnly && p.size < p.minSize) {
+                    p.size = p.minSize;
+                    allowReduce = false
+                }
+            } else if (p.justify == 'max') {
+                p.pos = Math.floor(p.pos - p.size + p.t)
             }
             if (p.pos < p.marginMin) {
                 var tmpMin = p.pos;
@@ -1428,7 +1229,7 @@ if (!hs) {
         fitOverlayBox: function(ratio, changed) {
             var x = this.x,
                 y = this.y;
-            if (this.overlayBox && (this.isImage || this.allowHeightReduction)) {
+            if (this.overlayBox) {
                 while (y.size > this.minHeight && x.size > this.minWidth && y.get('wsize') > y.get('fitsize')) {
                     y.size -= 10;
                     if (ratio) x.size = y.size * ratio;
@@ -1442,6 +1243,7 @@ if (!hs) {
             var x = this.x,
                 y = this.y;
             this.doShowHide('hidden');
+            if (this.slideshow && this.slideshow.thumbstrip) this.slideshow.thumbstrip.selectThumb();
             this.changeSize(1, {
                 wrapper: {
                     width: x.get('wsize'),
@@ -1458,9 +1260,16 @@ if (!hs) {
             }, hs.expandDuration)
         },
         changeSize: function(up, to, dur) {
+            var trans = this.transitions,
+                other = up ? (this.last ? this.last.a : null) : hs.upcoming,
+                t = (trans[1] && other && hs.getParam(other, 'transitions')[1] == trans[1]) ? trans[1] : trans[0];
+            if (this[t] && t != 'expand') {
+                this[t](up, to);
+                return
+            }
             if (this.outline && !this.outlineWhileAnimating) {
                 if (up) this.outline.setPosition();
-                else this.outline.destroy((this.isHtml && this.preserveContent))
+                else this.outline.destroy()
             }
             if (!up) this.destroyOverlays();
             var exp = this,
@@ -1480,12 +1289,6 @@ if (!hs) {
                 width: x.t + 'px',
                 height: y.t + 'px'
             });
-            if (up && this.isHtml) {
-                hs.setStyles(this.wrapper, {
-                    left: (x.tpos - x.cb + x.tb) + 'px',
-                    top: (y.tpos - y.cb + y.tb) + 'px'
-                })
-            }
             if (this.fadeInOut) {
                 hs.setStyles(this.wrapper, {
                     opacity: up ? 0 : 1
@@ -1508,34 +1311,198 @@ if (!hs) {
                         };
                         exp.outline.setPosition(pos, 0, 1)
                     }
-                    if (exp.isHtml) {
-                        if (args.prop == 'left') exp.mediumContent.style.left = (x.pos - val) + 'px';
-                        if (args.prop == 'top') exp.mediumContent.style.top = (y.pos - val) + 'px'
-                    }
                 }
             });
             hs.animate(this.content, to.content, dur, easing, after);
             if (up) {
                 this.wrapper.style.visibility = 'visible';
                 this.content.style.visibility = 'visible';
-                if (this.isHtml) this.innerContent.style.visibility = 'visible';
                 this.a.className += ' highslide-active-anchor'
             }
+        },
+        fade: function(up, to) {
+            this.outlineWhileAnimating = false;
+            var exp = this,
+                t = up ? hs.expandDuration : 0;
+            if (up) {
+                hs.animate(this.wrapper, to.wrapper, 0);
+                hs.setStyles(this.wrapper, {
+                    opacity: 0,
+                    visibility: 'visible'
+                });
+                hs.animate(this.content, to.content, 0);
+                this.content.style.visibility = 'visible';
+                hs.animate(this.wrapper, {
+                    opacity: 1
+                }, t, null, function() {
+                    exp.afterExpand()
+                })
+            }
+            if (this.outline) {
+                this.outline.table.style.zIndex = this.wrapper.style.zIndex;
+                var dir = up || -1,
+                    offset = this.outline.offset,
+                    startOff = up ? 3 : offset,
+                    endOff = up ? offset : 3;
+                for (var i = startOff; dir * i <= dir * endOff; i += dir, t += 25) {
+                    (function() {
+                        var o = up ? endOff - i : startOff - i;
+                        setTimeout(function() {
+                            exp.outline.setPosition(0, o, 1)
+                        }, t)
+                    })()
+                }
+            }
+            if (up) {} else {
+                setTimeout(function() {
+                    if (exp.outline) exp.outline.destroy(exp.preserveContent);
+                    exp.destroyOverlays();
+                    hs.animate(exp.wrapper, {
+                        opacity: 0
+                    }, hs.restoreDuration, null, function() {
+                        exp.afterClose()
+                    })
+                }, t)
+            }
+        },
+        crossfade: function(up, to, from) {
+            if (!up) return;
+            var exp = this,
+                last = this.last,
+                x = this.x,
+                y = this.y,
+                lastX = last.x,
+                lastY = last.y,
+                wrapper = this.wrapper,
+                content = this.content,
+                overlayBox = this.overlayBox;
+            hs.removeEventListener(document, 'mousemove', hs.dragHandler);
+            hs.setStyles(content, {
+                width: (x.imgSize || x.size) + 'px',
+                height: (y.imgSize || y.size) + 'px'
+            });
+            if (overlayBox) overlayBox.style.overflow = 'visible';
+            this.outline = last.outline;
+            if (this.outline) this.outline.exp = exp;
+            last.outline = null;
+            var fadeBox = hs.createElement('div', {
+                className: 'highslide-' + this.contentType
+            }, {
+                position: 'absolute',
+                zIndex: 4,
+                overflow: 'hidden',
+                display: 'none'
+            });
+            var names = {
+                oldImg: last,
+                newImg: this
+            };
+            for (var n in names) {
+                this[n] = names[n].content.cloneNode(1);
+                hs.setStyles(this[n], {
+                    position: 'absolute',
+                    border: 0,
+                    visibility: 'visible'
+                });
+                fadeBox.appendChild(this[n])
+            }
+            wrapper.appendChild(fadeBox);
+            if (overlayBox) {
+                overlayBox.className = '';
+                wrapper.appendChild(overlayBox)
+            }
+            fadeBox.style.display = '';
+            last.content.style.display = 'none';
+            if (hs.safari && hs.uaVersion < 525) {
+                this.wrapper.style.visibility = 'visible'
+            }
+            hs.animate(wrapper, {
+                width: x.size
+            }, {
+                duration: hs.transitionDuration,
+                step: function(val, args) {
+                    var pos = args.pos,
+                        invPos = 1 - pos;
+                    var prop, size = {},
+                        props = ['pos', 'size', 'p1', 'p2'];
+                    for (var n in props) {
+                        prop = props[n];
+                        size['x' + prop] = Math.round(invPos * lastX[prop] + pos * x[prop]);
+                        size['y' + prop] = Math.round(invPos * lastY[prop] + pos * y[prop]);
+                        size.ximgSize = Math.round(invPos * (lastX.imgSize || lastX.size) + pos * (x.imgSize || x.size));
+                        size.ximgPad = Math.round(invPos * lastX.get('imgPad') + pos * x.get('imgPad'));
+                        size.yimgSize = Math.round(invPos * (lastY.imgSize || lastY.size) + pos * (y.imgSize || y.size));
+                        size.yimgPad = Math.round(invPos * lastY.get('imgPad') + pos * y.get('imgPad'))
+                    }
+                    if (exp.outline) exp.outline.setPosition({
+                        x: size.xpos,
+                        y: size.ypos,
+                        w: size.xsize + size.xp1 + size.xp2 + 2 * x.cb,
+                        h: size.ysize + size.yp1 + size.yp2 + 2 * y.cb
+                    });
+                    last.wrapper.style.clip = 'rect(' + (size.ypos - lastY.pos) + 'px, ' + (size.xsize + size.xp1 + size.xp2 + size.xpos + 2 * lastX.cb - lastX.pos) + 'px, ' + (size.ysize + size.yp1 + size.yp2 + size.ypos + 2 * lastY.cb - lastY.pos) + 'px, ' + (size.xpos - lastX.pos) + 'px)';
+                    hs.setStyles(content, {
+                        top: (size.yp1 + y.get('imgPad')) + 'px',
+                        left: (size.xp1 + x.get('imgPad')) + 'px',
+                        marginTop: (y.pos - size.ypos) + 'px',
+                        marginLeft: (x.pos - size.xpos) + 'px'
+                    });
+                    hs.setStyles(wrapper, {
+                        top: size.ypos + 'px',
+                        left: size.xpos + 'px',
+                        width: (size.xp1 + size.xp2 + size.xsize + 2 * x.cb) + 'px',
+                        height: (size.yp1 + size.yp2 + size.ysize + 2 * y.cb) + 'px'
+                    });
+                    hs.setStyles(fadeBox, {
+                        width: (size.ximgSize || size.xsize) + 'px',
+                        height: (size.yimgSize || size.ysize) + 'px',
+                        left: (size.xp1 + size.ximgPad) + 'px',
+                        top: (size.yp1 + size.yimgPad) + 'px',
+                        visibility: 'visible'
+                    });
+                    hs.setStyles(exp.oldImg, {
+                        top: (lastY.pos - size.ypos + lastY.p1 - size.yp1 + lastY.get('imgPad') - size.yimgPad) + 'px',
+                        left: (lastX.pos - size.xpos + lastX.p1 - size.xp1 + lastX.get('imgPad') - size.ximgPad) + 'px'
+                    });
+                    hs.setStyles(exp.newImg, {
+                        opacity: pos,
+                        top: (y.pos - size.ypos + y.p1 - size.yp1 + y.get('imgPad') - size.yimgPad) + 'px',
+                        left: (x.pos - size.xpos + x.p1 - size.xp1 + x.get('imgPad') - size.ximgPad) + 'px'
+                    });
+                    if (overlayBox) hs.setStyles(overlayBox, {
+                        width: size.xsize + 'px',
+                        height: size.ysize + 'px',
+                        left: (size.xp1 + x.cb) + 'px',
+                        top: (size.yp1 + y.cb) + 'px'
+                    })
+                },
+                complete: function() {
+                    wrapper.style.visibility = content.style.visibility = 'visible';
+                    content.style.display = 'block';
+                    hs.discardElement(fadeBox);
+                    exp.afterExpand();
+                    last.afterClose();
+                    exp.last = null
+                }
+            })
+        },
+        reuseOverlay: function(o, el) {
+            if (!this.last) return false;
+            for (var i = 0; i < this.last.overlays.length; i++) {
+                var oDiv = hs.$('hsId' + this.last.overlays[i]);
+                if (oDiv && oDiv.hsId == o.hsId) {
+                    this.genOverlayBox();
+                    oDiv.reuse = this.key;
+                    hs.push(this.overlays, this.last.overlays[i]);
+                    return true
+                }
+            }
+            return false
         },
         afterExpand: function() {
             this.isExpanded = true;
             this.focus();
-            if (this.isHtml && this.objectLoadTime == 'after') this.writeExtendedContent();
-            if (this.iframe) {
-                try {
-                    var exp = this,
-                        doc = this.iframe.contentDocument || this.iframe.contentWindow.document;
-                    hs.addEventListener(doc, 'mousedown', function() {
-                        if (hs.focusKey != exp.key) exp.focus()
-                    })
-                } catch (e) {}
-                if (hs.ie && typeof this.isClosing != 'boolean') this.iframe.style.width = (this.objectWidth - 1) + 'px'
-            }
+            if (this.dimmingOpacity) hs.dim(this);
             if (hs.upcoming && hs.upcoming == this.a) hs.upcoming = null;
             this.prepareNextOutline();
             var p = hs.page,
@@ -1562,6 +1529,10 @@ if (!hs) {
         getAdjacentAnchor: function(op) {
             var current = this.getAnchorIndex(),
                 as = hs.anchors.groups[this.slideshowGroup || 'none'];
+            if (as && !as[current + op] && this.slideshow && this.slideshow.repeat) {
+                if (op == 1) return as[0];
+                else if (op == -1) return as[as.length - 1]
+            }
             return (as && as[current + op]) || null
         },
         getAnchorIndex: function() {
@@ -1572,12 +1543,54 @@ if (!hs) {
                 }
             return null
         },
+        getNumber: function() {
+            if (this[this.numberPosition]) {
+                var arr = hs.anchors.groups[this.slideshowGroup || 'none'];
+                if (arr) {
+                    var s = hs.lang.number.replace('%1', this.getAnchorIndex() + 1).replace('%2', arr.length);
+                    this[this.numberPosition].innerHTML = '<div class="highslide-number">' + s + '</div>' + this[this.numberPosition].innerHTML
+                }
+            }
+        },
+        initSlideshow: function() {
+            if (!this.last) {
+                for (var i = 0; i < hs.slideshows.length; i++) {
+                    var ss = hs.slideshows[i],
+                        sg = ss.slideshowGroup;
+                    if (typeof sg == 'undefined' || sg === null || sg === this.slideshowGroup) this.slideshow = new hs.Slideshow(this.key, ss)
+                }
+            } else {
+                this.slideshow = this.last.slideshow
+            }
+            var ss = this.slideshow;
+            if (!ss) return;
+            var key = ss.expKey = this.key;
+            ss.checkFirstAndLast();
+            ss.disable('full-expand');
+            if (ss.controls) {
+                this.createOverlay(hs.extend(ss.overlayOptions || {}, {
+                    overlayId: ss.controls,
+                    hsId: 'controls',
+                    zIndex: 5
+                }))
+            }
+            if (ss.thumbstrip) ss.thumbstrip.add(this);
+            if (!this.last && this.autoplay) ss.play(true);
+            if (ss.autoplay) {
+                ss.autoplay = setTimeout(function() {
+                    hs.next(key)
+                }, (ss.interval || 500))
+            }
+        },
         cancelLoading: function() {
             hs.discardElement(this.wrapper);
             hs.expanders[this.key] = null;
+            if (hs.upcoming == this.a) hs.upcoming = null;
+            hs.undim(this.key);
             if (this.loading) hs.loading.style.left = '-9999px'
         },
         writeCredits: function() {
+            if (this.credits) return;
             this.credits = hs.createElement('a', {
                 href: hs.creditsHref,
                 target: hs.creditsTarget,
@@ -1587,7 +1600,8 @@ if (!hs) {
             });
             this.createOverlay({
                 overlayId: this.credits,
-                position: this.creditsPosition || 'top left'
+                position: this.creditsPosition || 'top left',
+                hsId: 'credits'
             })
         },
         getInline: function(types, addOverlay) {
@@ -1616,6 +1630,7 @@ if (!hs) {
                         }
                     }
                 }
+                if (!this[type] && !s && this.numberPosition == type) s = '\n';
                 if (!this[type] && s) this[type] = hs.createElement('div', {
                     className: 'highslide-' + type,
                     innerHTML: s
@@ -1649,8 +1664,10 @@ if (!hs) {
                         var elPos = hs.getPosition(els[i]);
                         elPos.w = els[i].offsetWidth;
                         elPos.h = els[i].offsetHeight;
-                        var clearsX = (elPos.x + elPos.w < this.x.get('opos') || elPos.x > this.x.get('opos') + this.x.get('osize'));
-                        var clearsY = (elPos.y + elPos.h < this.y.get('opos') || elPos.y > this.y.get('opos') + this.y.get('osize'));
+                        if (!this.dimmingOpacity) {
+                            var clearsX = (elPos.x + elPos.w < this.x.get('opos') || elPos.x > this.x.get('opos') + this.x.get('osize'));
+                            var clearsY = (elPos.y + elPos.h < this.y.get('opos') || elPos.y > this.y.get('opos') + this.y.get('osize'))
+                        }
                         var wrapperKey = hs.getWrapperKey(els[i]);
                         if (!clearsX && !clearsY && wrapperKey != this.key) {
                             if (!hiddenBy) {
@@ -1676,21 +1693,17 @@ if (!hs) {
                 if (hs.expanders[i] && i == hs.focusKey) {
                     var blurExp = hs.expanders[i];
                     blurExp.content.className += ' highslide-' + blurExp.contentType + '-blur';
-                    if (blurExp.isImage) {
-                        blurExp.content.style.cursor = hs.ieLt7 ? 'hand' : 'pointer';
-                        blurExp.content.title = hs.lang.focusTitle
-                    }
+                    blurExp.content.style.cursor = hs.ie ? 'hand' : 'pointer';
+                    blurExp.content.title = hs.lang.focusTitle
                 }
             }
             if (this.outline) this.outline.table.style.zIndex = this.wrapper.style.zIndex - 1;
             this.content.className = 'highslide-' + this.contentType;
-            if (this.isImage) {
-                this.content.title = hs.lang.restoreTitle;
-                if (hs.restoreCursor) {
-                    hs.styleRestoreCursor = window.opera ? 'pointer' : 'url(' + hs.graphicsDir + hs.restoreCursor + '), pointer';
-                    if (hs.ieLt7 && hs.uaVersion < 6) hs.styleRestoreCursor = 'hand';
-                    this.content.style.cursor = hs.styleRestoreCursor
-                }
+            this.content.title = hs.lang.restoreTitle;
+            if (hs.restoreCursor) {
+                hs.styleRestoreCursor = window.opera ? 'pointer' : 'url(' + hs.graphicsDir + hs.restoreCursor + '), pointer';
+                if (hs.ie && hs.uaVersion < 6) hs.styleRestoreCursor = 'hand';
+                this.content.style.cursor = hs.styleRestoreCursor
             }
             hs.focusKey = this.key;
             hs.addEventListener(document, window.opera ? 'keypress' : 'keydown', hs.keyHandler)
@@ -1703,7 +1716,7 @@ if (!hs) {
             var w, h, r = e.width / e.height;
             w = Math.max(e.width + e.dX, Math.min(this.minWidth, this.x.full));
             if (this.isImage && Math.abs(w - this.x.full) < 12) w = this.x.full;
-            h = this.isHtml ? e.height + e.dY : w / r;
+            h = w / r;
             if (h < Math.min(this.minHeight, this.y.full)) {
                 h = Math.min(this.minHeight, this.y.full);
                 if (this.isImage) w = h * r
@@ -1717,10 +1730,14 @@ if (!hs) {
         },
         close: function() {
             if (this.isClosing || !this.isExpanded) return;
+            if (this.transitions[1] == 'crossfade' && hs.upcoming) {
+                hs.getExpander(hs.upcoming).cancelLoading();
+                hs.upcoming = null
+            }
             this.isClosing = true;
+            if (this.slideshow && !hs.upcoming) this.slideshow.pause();
             hs.removeEventListener(document, window.opera ? 'keypress' : 'keydown', hs.keyHandler);
             try {
-                if (this.isHtml) this.htmlPrepareClose();
                 this.content.style.cursor = 'default';
                 this.changeSize(0, {
                     wrapper: {
@@ -1740,72 +1757,17 @@ if (!hs) {
                 this.afterClose()
             }
         },
-        htmlPrepareClose: function() {
-            if (hs.geckoMac) {
-                if (!hs.mask) hs.mask = hs.createElement('div', null, {
-                    position: 'absolute'
-                }, hs.container);
-                hs.setStyles(hs.mask, {
-                    width: this.x.size + 'px',
-                    height: this.y.size + 'px',
-                    left: this.x.pos + 'px',
-                    top: this.y.pos + 'px',
-                    display: 'block'
-                })
-            }
-            if (this.objectType == 'swf') try {
-                hs.$(this.body.id).StopPlay()
-            } catch (e) {}
-            if (this.objectLoadTime == 'after' && !this.preserveContent) this.destroyObject();
-            if (this.scrollerDiv && this.scrollerDiv != this.scrollingContent) this.scrollerDiv.style.overflow = 'hidden'
-        },
-        destroyObject: function() {
-            if (hs.ie && this.iframe) try {
-                this.iframe.contentWindow.document.body.innerHTML = ''
-            } catch (e) {
-                this.iframe.src = ''
-            }
-            if (this.objectType == 'swf') swfobject.removeSWF(this.body.id);
-            this.body.innerHTML = ''
-        },
-        sleep: function() {
-            if (this.outline) this.outline.table.style.display = 'none';
-            this.releaseMask = null;
-            this.wrapper.style.display = 'none';
-            this.isExpanded = false;
-            hs.push(hs.sleeping, this)
-        },
-        awake: function() {
-            try {
-                hs.expanders[this.key] = this;
-                if (!hs.allowMultipleInstances && hs.focusKey != this.key) {
-                    try {
-                        hs.expanders[hs.focusKey].close()
-                    } catch (e) {}
-                }
-                var z = hs.zIndexCounter++,
-                    stl = {
-                        display: '',
-                        zIndex: z
-                    };
-                hs.setStyles(this.wrapper, stl);
-                this.isClosing = false;
-                var o = this.outline || 0;
-                if (o) {
-                    if (!this.outlineWhileAnimating) stl.visibility = 'hidden';
-                    hs.setStyles(o.table, stl)
-                }
-                this.show()
-            } catch (e) {}
-        },
         createOverlay: function(o) {
-            var el = o.overlayId;
+            var el = o.overlayId,
+                relToVP = (o.relativeTo == 'viewport' && !/panel$/.test(o.position));
             if (typeof el == 'string') el = hs.getNode(el);
             if (o.html) el = hs.createElement('div', {
                 innerHTML: o.html
             });
             if (!el || typeof el == 'string') return;
             el.style.display = 'block';
+            o.hsId = o.hsId || o.overlayId;
+            if (this.transitions[1] == 'crossfade' && this.reuseOverlay(o, el)) return;
             this.genOverlayBox();
             var width = o.width && /^[0-9]+(px|%)$/.test(o.width) ? o.width : 'auto';
             if (/^(left|right)panel$/.test(o.position) && !/^[0-9]+px$/.test(o.width)) width = '200px';
@@ -1818,7 +1780,8 @@ if (!hs) {
                 width: width,
                 direction: hs.lang.cssDirection || '',
                 opacity: 0
-            }, this.overlayBox, true);
+            }, relToVP ? hs.viewport : this.overlayBox, true);
+            if (relToVP) overlay.hsKey = this.key;
             overlay.appendChild(el);
             hs.extend(overlay, {
                 opacity: 1,
@@ -1837,9 +1800,14 @@ if (!hs) {
         },
         positionOverlay: function(overlay) {
             var p = overlay.position || 'middle center',
+                relToVP = (overlay.relativeTo == 'viewport'),
                 offX = overlay.offsetX,
                 offY = overlay.offsetY;
-            if (overlay.parentNode != this.overlayBox) this.overlayBox.appendChild(overlay);
+            if (relToVP) {
+                hs.viewport.style.display = 'block';
+                overlay.hsKey = this.key;
+                if (overlay.offsetWidth > overlay.parentNode.offsetWidth) overlay.style.width = '100%'
+            } else if (overlay.parentNode != this.overlayBox) this.overlayBox.appendChild(overlay);
             if (/left$/.test(p)) overlay.style.left = offX + 'px';
             if (/center$/.test(p)) hs.setStyles(overlay, {
                 left: '50%',
@@ -1865,6 +1833,9 @@ if (!hs) {
                 });
                 this.x.p2 = overlay.offsetWidth
             }
+            var parOff = overlay.parentNode.offsetHeight;
+            overlay.style.height = 'auto';
+            if (relToVP && overlay.offsetHeight > parOff) overlay.style.height = hs.ieLt7 ? parOff + 'px' : '100%';
             if (/^top/.test(p)) overlay.style.top = offY + 'px';
             if (/^middle/.test(p)) hs.setStyles(overlay, {
                 top: '50%',
@@ -1895,6 +1866,7 @@ if (!hs) {
         },
         getOverlays: function() {
             this.getInline(['heading', 'caption'], true);
+            this.getNumber();
             if (this.heading && this.dragByHeading) this.heading.className += ' highslide-move';
             if (hs.showCredits) this.writeCredits();
             for (var i = 0; i < hs.overlays.length; i++) {
@@ -1902,7 +1874,7 @@ if (!hs) {
                     tId = o.thumbnailId,
                     sg = o.slideshowGroup;
                 if ((!tId && !sg) || (tId && tId == this.thumbsUserSetId) || (sg && sg === this.slideshowGroup)) {
-                    if (this.isImage || (this.isHtml && o.useOnHtml)) this.createOverlay(o)
+                    this.createOverlay(o)
                 }
             }
             var os = [];
@@ -1985,12 +1957,21 @@ if (!hs) {
         },
         destroyOverlays: function() {
             if (!this.overlays.length) return;
-            if (this.isHtml && this.preserveContent) {
-                this.overlayBox.style.top = '-9999px';
-                hs.container.appendChild(this.overlayBox)
-            } else hs.discardElement(this.overlayBox)
+            if (this.slideshow) {
+                var c = this.slideshow.controls;
+                if (c && hs.getExpander(c) == this) c.parentNode.removeChild(c)
+            }
+            for (var i = 0; i < this.overlays.length; i++) {
+                var o = hs.$('hsId' + this.overlays[i]);
+                if (o && o.parentNode == hs.viewport && hs.getExpander(o) == this) hs.discardElement(o)
+            }
+            hs.discardElement(this.overlayBox)
         },
         createFullExpand: function() {
+            if (this.slideshow && this.slideshow.controls) {
+                this.slideshow.enable('full-expand');
+                return
+            }
             this.fullExpandLabel = hs.createElement('a', {
                 href: 'javascript:hs.expanders[' + this.key + '].doFullExpand();',
                 title: hs.lang.fullExpandTitle,
@@ -2007,14 +1988,11 @@ if (!hs) {
             try {
                 if (this.fullExpandLabel) hs.discardElement(this.fullExpandLabel);
                 this.focus();
-                var xSize = this.x.size,
-                    ySize = this.y.size;
+                var xSize = this.x.size;
                 this.resizeTo(this.x.full, this.y.full);
                 var xpos = this.x.pos - (this.x.size - xSize) / 2;
                 if (xpos < hs.marginLeft) xpos = hs.marginLeft;
-                var ypos = this.y.pos - (this.y.size - ySize) / 2;
-                if (ypos < hs.marginTop) ypos = hs.marginTop;
-                this.moveTo(xpos, ypos);
+                this.moveTo(xpos, this.y.pos);
                 this.doShowHide('hidden')
             } catch (e) {
                 this.error(e)
@@ -2023,111 +2001,233 @@ if (!hs) {
         afterClose: function() {
             this.a.className = this.a.className.replace('highslide-active-anchor', '');
             this.doShowHide('visible');
-            if (this.isHtml && this.preserveContent) {
-                this.sleep()
-            } else {
-                if (this.outline && this.outlineWhileAnimating) this.outline.destroy();
-                if (this.iframe && this.objectLoadTime != 'after') this.destroyObject();
-                hs.discardElement(this.wrapper)
-            } if (hs.mask) hs.mask.style.display = 'none';
+            if (this.outline && this.outlineWhileAnimating) this.outline.destroy();
+            hs.discardElement(this.wrapper);
+            this.destroyOverlays();
+            if (!hs.viewport.childNodes.length) hs.viewport.style.display = 'none';
+            if (this.dimmingOpacity) hs.undim(this.key);
             hs.expanders[this.key] = null;
             hs.reOrder()
         }
     };
-    hs.Ajax = function(a, content, pre) {
-        this.a = a;
-        this.content = content;
-        this.pre = pre
+    hs.Slideshow = function(expKey, options) {
+        if (hs.dynamicallyUpdateAnchors !== false) hs.updateAnchors();
+        this.expKey = expKey;
+        for (var x in options) this[x] = options[x];
+        if (this.useControls) this.getControls();
+        if (this.thumbstrip) this.thumbstrip = hs.Thumbstrip(this)
     };
-    hs.Ajax.prototype = {
-        run: function() {
-            var xhr;
-            if (!this.src) this.src = hs.getSrc(this.a);
-            if (this.src.match('#')) {
-                var arr = this.src.split('#');
-                this.src = arr[0];
-                this.id = arr[1]
-            }
-            if (hs.cachedGets[this.src]) {
-                this.cachedGet = hs.cachedGets[this.src];
-                if (this.id) this.getElementContent();
-                else this.loadHTML();
-                return
-            }
-            try {
-                xhr = new XMLHttpRequest()
-            } catch (e) {
-                try {
-                    xhr = new ActiveXObject("Msxml2.XMLHTTP")
-                } catch (e) {
-                    try {
-                        xhr = new ActiveXObject("Microsoft.XMLHTTP")
-                    } catch (e) {
-                        this.onError()
-                    }
-                }
-            }
+    hs.Slideshow.prototype = {
+        getControls: function() {
+            this.controls = hs.createElement('div', {
+                innerHTML: hs.replaceLang(hs.skin.controls)
+            }, null, hs.container);
+            var buttons = ['play', 'pause', 'previous', 'next', 'move', 'full-expand', 'close'];
+            this.btn = {};
             var pThis = this;
-            xhr.onreadystatechange = function() {
-                if (pThis.xhr.readyState == 4) {
-                    if (pThis.id) pThis.getElementContent();
-                    else pThis.loadHTML()
-                }
-            };
-            var src = this.src;
-            this.xhr = xhr;
-            if (hs.forceAjaxReload) src = src.replace(/$/, (/\?/.test(src) ? '&' : '?') + 'dummy=' + (new Date()).getTime());
-            xhr.open('GET', src, true);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send(null)
-        },
-        getElementContent: function() {
-            hs.init();
-            var attribs = window.opera || hs.ie6SSL ? {
-                src: 'about:blank'
-            } : null;
-            this.iframe = hs.createElement('iframe', attribs, {
-                position: 'absolute',
-                top: '-9999px'
-            }, hs.container);
-            this.loadHTML()
-        },
-        loadHTML: function() {
-            var s = this.cachedGet || this.xhr.responseText,
-                regBody;
-            if (this.pre) hs.cachedGets[this.src] = s;
-            if (!hs.ie || hs.uaVersion >= 5.5) {
-                s = s.replace(new RegExp('<link[^>]*>', 'gi'), '').replace(new RegExp('<script[^>]*>.*?</script>', 'gi'), '');
-                if (this.iframe) {
-                    var doc = this.iframe.contentDocument;
-                    if (!doc && this.iframe.contentWindow) doc = this.iframe.contentWindow.document;
-                    if (!doc) {
-                        var pThis = this;
-                        setTimeout(function() {
-                            pThis.loadHTML()
-                        }, 25);
-                        return
-                    }
-                    doc.open();
-                    doc.write(s);
-                    doc.close();
-                    try {
-                        s = doc.getElementById(this.id).innerHTML
-                    } catch (e) {
-                        try {
-                            s = this.iframe.document.getElementById(this.id).innerHTML
-                        } catch (e) {}
-                    }
-                    hs.discardElement(this.iframe)
-                } else {
-                    regBody = /(<body[^>]*>|<\/body>)/ig;
-                    if (regBody.test(s)) s = s.split(regBody)[hs.ieLt9 ? 1 : 2]
-                }
+            for (var i = 0; i < buttons.length; i++) {
+                this.btn[buttons[i]] = hs.getElementByClass(this.controls, 'li', 'highslide-' + buttons[i]);
+                this.enable(buttons[i])
             }
-            hs.getElementByClass(this.content, 'DIV', 'highslide-body').innerHTML = s;
-            this.onLoad();
-            for (var x in this) this[x] = null
+            this.btn.pause.style.display = 'none'
+        },
+        checkFirstAndLast: function() {
+            if (this.repeat || !this.controls) return;
+            var exp = hs.expanders[this.expKey],
+                cur = exp.getAnchorIndex(),
+                re = /disabled$/;
+            if (cur == 0) this.disable('previous');
+            else if (re.test(this.btn.previous.getElementsByTagName('a')[0].className)) this.enable('previous');
+            if (cur + 1 == hs.anchors.groups[exp.slideshowGroup || 'none'].length) {
+                this.disable('next');
+                this.disable('play')
+            } else if (re.test(this.btn.next.getElementsByTagName('a')[0].className)) {
+                this.enable('next');
+                this.enable('play')
+            }
+        },
+        enable: function(btn) {
+            if (!this.btn) return;
+            var sls = this,
+                a = this.btn[btn].getElementsByTagName('a')[0],
+                re = /disabled$/;
+            a.onclick = function() {
+                sls[btn]();
+                return false
+            };
+            if (re.test(a.className)) a.className = a.className.replace(re, '')
+        },
+        disable: function(btn) {
+            if (!this.btn) return;
+            var a = this.btn[btn].getElementsByTagName('a')[0];
+            a.onclick = function() {
+                return false
+            };
+            if (!/disabled$/.test(a.className)) a.className += ' disabled'
+        },
+        hitSpace: function() {
+            if (this.autoplay) this.pause();
+            else this.play()
+        },
+        play: function(wait) {
+            if (this.btn) {
+                this.btn.play.style.display = 'none';
+                this.btn.pause.style.display = ''
+            }
+            this.autoplay = true;
+            if (!wait) hs.next(this.expKey)
+        },
+        pause: function() {
+            if (this.btn) {
+                this.btn.pause.style.display = 'none';
+                this.btn.play.style.display = ''
+            }
+            clearTimeout(this.autoplay);
+            this.autoplay = null
+        },
+        previous: function() {
+            this.pause();
+            hs.previous(this.btn.previous)
+        },
+        next: function() {
+            this.pause();
+            hs.next(this.btn.next)
+        },
+        move: function() {},
+        'full-expand': function() {
+            hs.getExpander().doFullExpand()
+        },
+        close: function() {
+            hs.close(this.btn.close)
+        }
+    };
+    hs.Thumbstrip = function(slideshow) {
+        function add(exp) {
+            hs.extend(options || {}, {
+                overlayId: dom,
+                hsId: 'thumbstrip',
+                className: 'highslide-thumbstrip-' + mode + '-overlay ' + (options.className || '')
+            });
+            if (hs.ieLt7) options.fade = 0;
+            exp.createOverlay(options);
+            hs.setStyles(dom.parentNode, {
+                overflow: 'hidden'
+            })
+        };
+
+        function scroll(delta) {
+            selectThumb(undefined, Math.round(delta * dom[isX ? 'offsetWidth' : 'offsetHeight'] * 0.7))
+        };
+
+        function selectThumb(i, scrollBy) {
+            if (i === undefined)
+                for (var j = 0; j < group.length; j++) {
+                    if (group[j] == hs.expanders[slideshow.expKey].a) {
+                        i = j;
+                        break
+                    }
+                }
+            if (i === undefined) return;
+            var as = dom.getElementsByTagName('a'),
+                active = as[i],
+                cell = active.parentNode,
+                left = isX ? 'Left' : 'Top',
+                right = isX ? 'Right' : 'Bottom',
+                width = isX ? 'Width' : 'Height',
+                offsetLeft = 'offset' + left,
+                offsetWidth = 'offset' + width,
+                overlayWidth = div.parentNode.parentNode[offsetWidth],
+                minTblPos = overlayWidth - table[offsetWidth],
+                curTblPos = parseInt(table.style[isX ? 'left' : 'top']) || 0,
+                tblPos = curTblPos,
+                mgnRight = 20;
+            if (scrollBy !== undefined) {
+                tblPos = curTblPos - scrollBy;
+                if (minTblPos > 0) minTblPos = 0;
+                if (tblPos > 0) tblPos = 0;
+                if (tblPos < minTblPos) tblPos = minTblPos
+            } else {
+                for (var j = 0; j < as.length; j++) as[j].className = '';
+                active.className = 'highslide-active-anchor';
+                var activeLeft = i > 0 ? as[i - 1].parentNode[offsetLeft] : cell[offsetLeft],
+                    activeRight = cell[offsetLeft] + cell[offsetWidth] + (as[i + 1] ? as[i + 1].parentNode[offsetWidth] : 0);
+                if (activeRight > overlayWidth - curTblPos) tblPos = overlayWidth - activeRight;
+                else if (activeLeft < -curTblPos) tblPos = -activeLeft
+            }
+            var markerPos = cell[offsetLeft] + (cell[offsetWidth] - marker[offsetWidth]) / 2 + tblPos;
+            hs.animate(table, isX ? {
+                left: tblPos
+            } : {
+                top: tblPos
+            }, null, 'easeOutQuad');
+            hs.animate(marker, isX ? {
+                left: markerPos
+            } : {
+                top: markerPos
+            }, null, 'easeOutQuad');
+            scrollUp.style.display = tblPos < 0 ? 'block' : 'none';
+            scrollDown.style.display = (tblPos > minTblPos) ? 'block' : 'none'
+        };
+        var group = hs.anchors.groups[hs.expanders[slideshow.expKey].slideshowGroup || 'none'],
+            options = slideshow.thumbstrip,
+            mode = options.mode || 'horizontal',
+            floatMode = (mode == 'float'),
+            tree = floatMode ? ['div', 'ul', 'li', 'span'] : ['table', 'tbody', 'tr', 'td'],
+            isX = (mode == 'horizontal'),
+            dom = hs.createElement('div', {
+                className: 'highslide-thumbstrip highslide-thumbstrip-' + mode,
+                innerHTML: '<div class="highslide-thumbstrip-inner">' + '<' + tree[0] + '><' + tree[1] + '></' + tree[1] + '></' + tree[0] + '></div>' + '<div class="highslide-scroll-up"><div></div></div>' + '<div class="highslide-scroll-down"><div></div></div>' + '<div class="highslide-marker"><div></div></div>'
+            }, {
+                display: 'none'
+            }, hs.container),
+            domCh = dom.childNodes,
+            div = domCh[0],
+            scrollUp = domCh[1],
+            scrollDown = domCh[2],
+            marker = domCh[3],
+            table = div.firstChild,
+            tbody = dom.getElementsByTagName(tree[1])[0],
+            tr;
+        for (var i = 0; i < group.length; i++) {
+            if (i == 0 || !isX) tr = hs.createElement(tree[2], null, null, tbody);
+            (function() {
+                var a = group[i],
+                    cell = hs.createElement(tree[3], null, null, tr),
+                    pI = i;
+                hs.createElement('a', {
+                    href: a.href,
+                    onclick: function() {
+                        hs.getExpander(this).focus();
+                        return hs.transit(a)
+                    },
+                    innerHTML: hs.stripItemFormatter ? hs.stripItemFormatter(a) : a.innerHTML
+                }, null, cell)
+            })()
+        }
+        if (!floatMode) {
+            scrollUp.onclick = function() {
+                scroll(-1)
+            };
+            scrollDown.onclick = function() {
+                scroll(1)
+            };
+            hs.addEventListener(tbody, document.onmousewheel !== undefined ? 'mousewheel' : 'DOMMouseScroll', function(e) {
+                var delta = 0;
+                e = e || window.event;
+                if (e.wheelDelta) {
+                    delta = e.wheelDelta / 120;
+                    if (hs.opera) delta = -delta
+                } else if (e.detail) {
+                    delta = -e.detail / 3
+                }
+                if (delta) scroll(-delta * 0.2);
+                if (e.preventDefault) e.preventDefault();
+                e.returnValue = false
+            })
+        }
+        return {
+            add: add,
+            selectThumb: selectThumb
         }
     };
     hs.langDefaults = hs.lang;
@@ -2146,29 +2246,36 @@ if (!hs) {
     hs.addEventListener(document, 'DOMContentLoaded', hs.ready);
     hs.addEventListener(window, 'load', hs.ready);
     hs.addEventListener(document, 'ready', function() {
-        if (hs.expandCursor) {
+        if (hs.expandCursor || hs.dimmingOpacity) {
             var style = hs.createElement('style', {
-                    type: 'text/css'
-                }, null, document.getElementsByTagName('HEAD')[0]),
-                backCompat = document.compatMode == 'BackCompat';
+                type: 'text/css'
+            }, null, document.getElementsByTagName('HEAD')[0]);
 
             function addRule(sel, dec) {
-                if (hs.ie && (hs.uaVersion < 9 || backCompat)) {
+                if (!hs.ie) {
+                    style.appendChild(document.createTextNode(sel + " {" + dec + "}"))
+                } else {
                     var last = document.styleSheets[document.styleSheets.length - 1];
                     if (typeof(last.addRule) == "object") last.addRule(sel, dec)
-                } else {
-                    style.appendChild(document.createTextNode(sel + " {" + dec + "}"))
                 }
             }
 
             function fix(prop) {
                 return 'expression( ( ( ignoreMe = document.documentElement.' + prop + ' ? document.documentElement.' + prop + ' : document.body.' + prop + ' ) ) + \'px\' );'
             }
-            if (hs.expandCursor) addRule('.highslide img', 'cursor: url(' + hs.graphicsDir + hs.expandCursor + '), pointer !important;')
+            if (hs.expandCursor) addRule('.highslide img', 'cursor: url(' + hs.graphicsDir + hs.expandCursor + '), pointer !important;');
+            addRule('.highslide-viewport-size', hs.ie && (hs.uaVersion < 7 || document.compatMode == 'BackCompat') ? 'position: absolute; ' + 'left:' + fix('scrollLeft') + 'top:' + fix('scrollTop') + 'width:' + fix('clientWidth') + 'height:' + fix('clientHeight') : 'position: fixed; width: 100%; height: 100%; left: 0; top: 0')
         }
     });
     hs.addEventListener(window, 'resize', function() {
-        hs.getPageSize()
+        hs.getPageSize();
+        if (hs.viewport)
+            for (var i = 0; i < hs.viewport.childNodes.length; i++) {
+                var node = hs.viewport.childNodes[i],
+                    exp = hs.getExpander(node);
+                exp.positionOverlay(node);
+                if (node.hsId == 'thumbstrip') exp.slideshow.thumbstrip.selectThumb()
+            }
     });
     hs.addEventListener(document, 'mousemove', function(e) {
         hs.mouse = {
@@ -2179,6 +2286,5 @@ if (!hs) {
     hs.addEventListener(document, 'mousedown', hs.mouseClickHandler);
     hs.addEventListener(document, 'mouseup', hs.mouseClickHandler);
     hs.addEventListener(document, 'ready', hs.getAnchors);
-    hs.addEventListener(window, 'load', hs.preloadImages);
-    hs.addEventListener(window, 'load', hs.preloadAjax)
-}
+    hs.addEventListener(window, 'load', hs.preloadImages)
+};
