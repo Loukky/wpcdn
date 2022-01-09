@@ -7,7 +7,7 @@ $.ajax({
     async: true,
     type: "GET",
     success: function(data, status, xhr) {
-        $('#userip-c').html(data.data.myip);
+        $('#userip-c').html(data.data.ip.query);
         $('#userlocation-c').html(`${data.data.location}`);
         if(data.data.myip); //$('#userlocation-c').html(`${data.country} , ${data.region} , ${data.city} , ${data.isp}`);
         else $("#userip").css("display", "none");
