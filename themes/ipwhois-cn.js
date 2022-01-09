@@ -6,7 +6,7 @@ $.ajax({
     url: 'https://ipwhois.app/json/'+ ip +'?objects=country,city,isp,ip,region&lang=zh-CN',
     async: true,
     type: "GET",
-    success: function(data, status, xhr) {
+    success: function(data, status, xhr ,json) {
         $('#userip-c').html(data.ip);
         $('#userlocation-c').html(`${data.country} , ${data.region} , ${data.isp}`);
         if(data.city) $('#userlocation-c').html(`${data.country} , ${data.region} , ${data.city} , ${data.isp}`);
