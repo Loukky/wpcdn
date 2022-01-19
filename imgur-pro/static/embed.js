@@ -19,8 +19,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
 		//图片懒加载
 		var flow = layui.flow;
 		flow.lazyimg({
-            elem:'#found img',
-	elem:'#lightgallery img'	
+            elem:'#found img','#lightgallery img'	
         });
         //图片查看器
         layer.photos({
