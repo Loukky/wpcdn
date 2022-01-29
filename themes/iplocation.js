@@ -11,7 +11,7 @@ jQuery(document).ready(function($){
                 else{
                     i="未知归属地";
                 }
-                t.replaceWith('<span class="ipinfo" style="font-family:roboto,sans-serif,serif">'+i+"</span>");
+                t.replaceWith('<span class="ipinfo" style="font-family:system-ui,roboto,sans-serif,serif">'+i+"</span>");
             })
         })
     }
