@@ -681,3 +681,6 @@ code {
 .progress{
     display: none;
 }
+text.header-font,div.footerword{
+font-family:system-ui,-apple-system,roboto,open sans,BlinkMacSystemFont,helvetica neue,Helvetica,nimbus sans l,Arial,liberation sans,pingfang sc,hiragino sans gb,noto sans cjk sc,source han sans sc,source han sans cn,microsoft yahei,noto sans sc,wenquanyi micro hei,wenquanyi zen hei,st heiti,SimHei,wenquanyi zen hei sharp,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
