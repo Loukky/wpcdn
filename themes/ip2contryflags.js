@@ -6,7 +6,7 @@ jQuery(document).ready(function($){
             $.getScript("https://geoip.loukky.com/?js=1&ip="+c,function(){
                 if(returnIpData.code==0){
                     var h=returnIpData.data.code2;
-                    var n=returnIpData.data.name;
+                    var n=returnIpData.data.countrycn;
                     i+=h;
                     m+=n;
                    
