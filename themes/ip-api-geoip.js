@@ -8,7 +8,7 @@ $.ajax({
     type: "GET",
     success: function(data, status, xhr) {
         $('#userip-c').html(data.ip);
-        $('#userlocation-c').html(`${data.city} , ${data.province} , {data.country}`);
+        $('#userlocation-c').html(`${data.city} , ${data.province} , ${data.country}`);
         if(data.data.myip); //$('#userlocation-c').html(`${data.country} , ${data.region} , ${data.city} , ${data.isp}`);
         else $("#userip").css("display", "none");
         $('#loading-tab2').css("display", "none");
