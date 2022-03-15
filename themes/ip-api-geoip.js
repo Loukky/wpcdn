@@ -8,8 +8,8 @@ $.ajax({
     type: "GET",
     success: function(data, status, xhr) {
         $('#userip-c').html(data.ip);
-        $('#userlocation-c').html(`${data.city}  ${data.province}  ${data.country}`);
-        if(data.ip); //$('#userlocation-c').html(`${data.country} , ${data.region} , ${data.city} , ${data.isp}`);
+        $('#userlocation-c').html(`${data.city} , ${data.country}`);
+        if(data.province); $('#userlocation-c').html(`${data.city} , ${data.province} , ${data.country}`);
         else $("#userip").css("display", "none");
         $('#loading-tab2').css("display", "none");
         $('#tab2-s').css("display", "inline-block");
