@@ -476,7 +476,7 @@ body{
     z-index: 99;
     right:5px;
     bottom: 5px;
-    display: none;
+   /* display: none; */
 }
 
 /* .layui-layer-imgprev{
