@@ -22,8 +22,8 @@ body{
 
 }
 @media screen and (min-width:769px) and (max-width:991px){
-    .left-menu{max-width: 20%;}
-    .layui-hide-xs{max-width: 80%;}
+    .left-menu{max-width: 25%;}
+    .layui-hide-xs{max-width: 75%;}
 }
 .layui-input{
     /* background-color:rgba(255,255,255,0.9); */
