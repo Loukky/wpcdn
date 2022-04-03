@@ -19,18 +19,16 @@ layui.use(['upload','form','element','layer','flow'], function(){
 		//图片懒加载
 		var flow = layui.flow;
 		flow.lazyimg({
-            elem:'#found img ,#lightgallery img'	
+            elem:'#found img'
         });
         //图片查看器
         layer.photos({
             photos: '#found'
-            ,anim: 5, //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-		closeBtn:1
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
         layer.photos({
             photos: '#lightgallery'
-            ,anim: 5, //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-		closeBtn:1
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
         
 		//执行实例
@@ -72,9 +70,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                     $("#markdown").val("![](" + res.url + ")");
                     $("#bbcode").val("[img]" + res.url + "[/img]");
                     $("#dlink").val(res.delete);
-		    $("#token").val(res.token);
                     $("#imgshow").show();
-			
                     //对图片进行鉴黄识别
                     identify(res.id);
                 }
@@ -110,7 +106,6 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 $("#re-md pre").empty();
                 $("#re-bbc pre").empty();
                 $("#re-dlink pre").empty();
-		$("#re-token pre").empty();    
                 layer.load(); //上传loading
                 n = 0;
             }
@@ -126,7 +121,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 if(res.code == 200){
                     //得到百分比
                     //var col = (n / total) * 100;
-                    multiple(res.url,res.delete,res.token);
+                    multiple(res.url,res.delete);
                     //对图片进行鉴黄识别
                     identify(res.id);
                     //element.progress('up-status', col + '%');
@@ -144,13 +139,12 @@ layui.use(['upload','form','element','layer','flow'], function(){
 });
 
 //显示多图上传结果
-function multiple(url,dlink,token){
+function multiple(url,dlink){
     $("#re-url pre").append(url + "<br>");
     $("#re-html pre").append("&lt;img src = '" + url + "' /&gt;" + "<br>");
     $("#re-md pre").append("![](" + url + ")" + "<br>");
     $("#re-bbc pre").append("[img]" + url + "[/img]" + "<br>");
     $("#re-dlink pre").append(dlink + "<br>");
-    $("#re-token pre").append(token + "<br>");
 }
 
 //复制链接
@@ -170,6 +164,32 @@ function copyurl(info){
     layui.use('layer', function(){
           var layer = layui.layer;
       
+          layer.msg('链接已复制！', {time: 2000,icon:1})
+    }); 
+}
+
+//多图上传复制
+function copy_more(id){
+    var copy = new clipBoard($("#" + id), {
+        beforeCopy: function() {
+            info = $("#" + id + " pre").html();
+        },
+        copy: function() {
+            console.log(info);
+            //info = info.replace(/<br>/g, "\n");
+            info = info.replace(/<br>/g, "\n");
+            console.log(info);
+            // info = info.replace(/<br>/g, "\r\n");
+            
+            return info;
+        },
+        afterCopy: function() {
+
+        }
+    });
+    layui.use('layer', function(){
+          var layer = layui.layer;
+
           layer.msg('链接已复制！', {time: 2000,icon:1})
     }); 
 }
