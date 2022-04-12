@@ -148,3 +148,7 @@ body a{
 .float-button button{
     width:36px;
 }
+.setting-msg li{
+    list-style: decimal;
+    margin-left:1.5em;
+}
