@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  $.get("https://geoip.loukky.com/myip.php",
+  $.get("https://loukky.com/files/ip/",
 function(text){
       var ip = (text);
 $.ajax({
