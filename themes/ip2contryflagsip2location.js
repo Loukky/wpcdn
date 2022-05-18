@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
     function vfhkyconlocquery(){
         $(".vfhkyconlocquery").each(function(){
             var c=$.trim(atob($(this).attr("loc-ip"))),t=$(this),i="",m="";
-            $.ajaxSetup({cache:true});
+           // $.ajaxSetup({cache:true});
             $.getScript("https://geoip.loukky.com/ip2location/?js=1&ip="+c,function(){
                 if(returnIpData.code==0){
                     var h=returnIpData.data.code2;
