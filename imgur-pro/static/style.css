@@ -707,3 +707,9 @@ body{
 text.header-font,div.footerword,code{
 font-family:system-ui,-apple-system,roboto,open sans,BlinkMacSystemFont,helvetica neue,Helvetica,nimbus sans l,Arial,liberation sans,pingfang sc,hiragino sans gb,noto sans cjk sc,source han sans sc,source han sans cn,microsoft yahei,noto sans sc,wenquanyi micro hei,wenquanyi zen hei,st heiti,SimHei,wenquanyi zen hei sharp,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
+.sideba{
+     height: auto;
+    border-radius: 3px;
+    background-color:#FFFFFF;
+    box-shadow: 2px 2px 10px #888888;
+}
