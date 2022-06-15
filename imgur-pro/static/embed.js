@@ -25,10 +25,12 @@ layui.use(['upload','form','element','layer','flow'], function(){
         layer.photos({
             photos: '#found'
             ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			,closeBtn:1
         });
         layer.photos({
             photos: '#lightgallery'
             ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			,closeBtn:1
         });
         
 		//执行实例
@@ -127,7 +129,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 if(res.code == 200){
                     //得到百分比
                     //var col = (n / total) * 100;
-                    multiple(res.url,res.delete);
+                    multiple(res.url,res.delete,res.token);
                     //对图片进行鉴黄识别
                     //先获取鉴黄开关
                     porn_switch = $("#porn_switch").val();
@@ -149,7 +151,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
 });
 
 //显示多图上传结果
-function multiple(url,dlink){
+function multiple(url,dlink,token){
     $("#re-url pre").append(url + "<br>");
     $("#re-html pre").append("&lt;img src = '" + url + "' /&gt;" + "<br>");
     $("#re-md pre").append("![](" + url + ")" + "<br>");
