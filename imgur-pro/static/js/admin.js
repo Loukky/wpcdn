@@ -6,6 +6,7 @@ function showlink(url,thumburl){
 //area:["600px","260px"]});
 		maxWidth:'600',
 	  offset:'auto'
+    });
 $("#img-thumb a").attr("href",thumburl);
 $("#img-thumb img").attr("src",thumburl);
 $("#url").val(url);
@@ -19,8 +20,8 @@ function copyurl(info){var copy=new clipBoard(document.getElementById("links"),{
             type:2,
             title:title,
            //area:["580px","420px"],
-				maxWidth:'600',
-		maxHeight:'360',
-	  offset:'auto',
+			maxWidth:'600',
+		    maxHeight:'360',
+	        offset:'auto',
             content:"/manage/imginfo/"+imgid})}
             function del_img(id,imgid,path,thumbnail_path){layer.confirm("确认删除这张图片？",{icon:3,title:"温馨提示！"},function(index){$.post("/set/del_img",{imgid:imgid,path:path,thumbnail_path:thumbnail_path},function(data,status){var re=JSON.parse(data);if(re.code==200){$("#img"+id).remove();console.log("#img"+id)}else{layer.msg(data)}});layer.close(index)})}function del_id(id){layer.confirm("确认删除这张图片？",{icon:3,title:"温馨提示！"},function(index){$.get("/del/id/"+id,function(data,status){var re=JSON.parse(data);if(re.code==200){$("#img"+id).remove()}else{layer.msg(data)}});layer.close(index)})}function mycore(){uri=location.pathname;if(uri=="/admin/"||uri=="/admin/index"){$.get("/admin/core",function(data,status){if(data.code=="-1000"){alert(data.msg)}else{return true}})}}function compress(id,storage){if(storage!="localhost"){layer.msg(storage+"类型不支持压缩！");return false}var index=layer.load();$.get("/deal/compress/"+id,function(data,status){re=JSON.parse(data);if(re.code==200){layer.close(index);layer.msg(re.msg)}else if(re.code==0){layer.close(index);layer.msg(re.msg)}else{layer.close(index);layer.msg(data)}})}function cancel(id){layer.confirm("确定取消可疑状态？",{icon:3,title:"温馨提示！"},function(index){$.get("/set/cancel/"+id,function(data,status){var re=JSON.parse(data);if(re.code==200){layer.msg("操作成功，请手动刷新页面！")}else{layer.msg(data)}});layer.close(index)})}function del_more(){var chkIds="";$("input:checkbox:checked").each(function(i){chkIds+=$(this).val()+","});ids=chkIds.split(",");layer.confirm("确认删除多张图片？（不可恢复）",{icon:3,title:"温馨提示！"},function(index){for(var i=0;i<ids.length-1;i++){$.get("/del/id/"+ids[i],function(data,status){var re=JSON.parse(data);if(re.code==200){$("#img"+re.id).remove();console.log("#img"+re.id)}else{layer.msg(data)}})}layer.close(index)})}function cancel_dubious(){var chkIds="";$("input:checkbox:checked").each(function(i){chkIds+=$(this).val()+","});ids=chkIds.split(",");layer.confirm("确定取消可疑状态？",{icon:3,title:"温馨提示！"},function(index){for(var i=0;i<ids.length-1;i++){$.get("/set/cancel/"+ids[i],function(data,status){var re=JSON.parse(data);if(re.code==200){$("#img"+re.id).remove();console.log("#img"+ids[i])}else{layer.msg(data)}})}layer.close(index)})}function version(){layer.open({title:"当前版本：",area:["240px","100px"],type:2,content:"/maintain/version"})}mycore();$("#checkAll").click(function(){if(this.checked){$("input[name='chk']:checkbox").each(function(){$(this).attr("checked",true)})}else{$("input[name='chk']:checkbox").each(function(){$(this).attr("checked",false)})}});function findimg(){var value=$("#value").val();var type=$("#type").val();if(type==""){layer.msg("请选择筛选条件！");return false}else if(value==""){layer.msg("请输入值！");return false}else if(type=="email"){uid=md5(value);window.location.href="/manage/images/"+uid+"/0";return false}window.location.href="/manage/images/"+type+"/?value="+value}function find_date_img(){var user=$("#user").val();var date=start_time+"|"+end_time;if(user==""){layer.msg("请选择筛选条件！");return FALSE}else if(start_time==""){layer.msg("请选择开始日期！");return FALSE}else if(end_time==""){layer.msg("请选择结束日期！");return FALSE}window.location.href="/manage/images/"+user+"/?date="+date}function check_all(){$("input[name='chk']").attr("checked","true")}function cancel_all(){$("input[name='chk']").removeAttr("checked")}function search_user(){var uid=md5($("#email").val());window.open("/admin/edit_user/"+uid,"_blank")}
