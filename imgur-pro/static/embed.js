@@ -25,12 +25,10 @@ layui.use(['upload','form','element','layer','flow'], function(){
         layer.photos({
             photos: '#found'
             ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-		,closeBtn:1
         });
         layer.photos({
             photos: '#lightgallery'
             ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-		,closeBtn:1
         });
         
 		//执行实例
@@ -72,10 +70,14 @@ layui.use(['upload','form','element','layer','flow'], function(){
                     $("#markdown").val("![](" + res.url + ")");
                     $("#bbcode").val("[img]" + res.url + "[/img]");
                     $("#dlink").val(res.delete);
-		    $("#token").val(res.token);
+					 $("#token").val(res.token);
                     $("#imgshow").show();
                     //对图片进行鉴黄识别
-                    identify(res.id);
+                    //先获取鉴黄开关
+                    porn_switch = $("#porn_switch").val();
+                    if( porn_switch == 'on' ) {
+                        identify(res.id);
+                    }
                 }
 			}
 			,error: function(){
@@ -109,7 +111,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 $("#re-md pre").empty();
                 $("#re-bbc pre").empty();
                 $("#re-dlink pre").empty();
-	        $("#re-token pre").empty();
+				$("#re-token pre").empty();
                 layer.load(); //上传loading
                 n = 0;
             }
@@ -125,9 +127,13 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 if(res.code == 200){
                     //得到百分比
                     //var col = (n / total) * 100;
-                    multiple(res.url,res.delete,res.token);
+                    multiple(res.url,res.delete);
                     //对图片进行鉴黄识别
-                    identify(res.id);
+                    //先获取鉴黄开关
+                    porn_switch = $("#porn_switch").val();
+                    if( porn_switch == 'on' ) {
+                        identify(res.id);
+                    }
                     //element.progress('up-status', col + '%');
                 }
                 else if(res.code == 0){
@@ -143,13 +149,13 @@ layui.use(['upload','form','element','layer','flow'], function(){
 });
 
 //显示多图上传结果
-function multiple(url,dlink,token){
+function multiple(url,dlink){
     $("#re-url pre").append(url + "<br>");
     $("#re-html pre").append("&lt;img src = '" + url + "' /&gt;" + "<br>");
     $("#re-md pre").append("![](" + url + ")" + "<br>");
     $("#re-bbc pre").append("[img]" + url + "[/img]" + "<br>");
     $("#re-dlink pre").append(dlink + "<br>");
-    $("#re-token pre").append(token + "<br>");
+	$("#re-token pre").append(token + "<br>");
 }
 
 //复制链接
@@ -199,6 +205,27 @@ function copy_more(id){
     }); 
 }
 
+//复制页面链接
+function copy_page_link(){
+    var url = window.location.href;
+    var copy = new clipBoard(document.getElementById('links'), {
+        beforeCopy: function() {
+            
+        },
+        copy: function() {
+            return url;
+        },
+        afterCopy: function() {
+
+        }
+    });
+    layui.use('layer', function(){
+          var layer = layui.layer;
+      
+          layer.msg('当前页面链接已复制！', {time: 2000,icon:1})
+    }); 
+}
+
 //用户登录
 function login(){
     // 获取用户提交的信息
@@ -237,8 +264,8 @@ function showlink(url,thumburl){
         type: 1,
         title: false,
         content: $('#imglink'),
-        //area: ['680px', '500px'],
-	    maxWidth:'600',
+        //area: ['680px', '500px']
+		maxWidth:'600',
 	  offset:'auto'
     });
     $("#img-thumb a").attr('href', thumburl);
@@ -252,20 +279,54 @@ function showlink(url,thumburl){
 
 //对图片进行鉴黄识别
 function identify(id){
-    //对图片进行鉴黄识别
-    $.get("/deal/identify/" + id,function(data,status){
-        var re = JSON.parse(data);
-        //状态码为400，说明该图片存在异常
-        if(re.code == 400){
-            layer.open({
-                title: '警告！'
-                ,content: '您的IP已被记录，请不要上传违规图片！'
-            }); 
-        }
-        else{
-            console.log(re.code);
-        }
-    });
+    //获取鉴黄接口
+    porn_interface = $("#porn_interface").val();
+    switch (porn_interface) {
+        case 'nsfw':
+            api_url = '/deal/nsfwjs_identify_one/' + id;
+            $.get(api_url,function(data,status){
+                if( (data.code == 200) && ( parseFloat(data.data.score) >= 0.9 ) ){
+                    layer.open({
+                        title: '警告！'
+                        ,content: '您的IP已被记录，请不要上传违规图片！'
+                    }); 
+                }
+            });
+            break;
+        case 'moderate':
+            api_url = '/deal/identify/' + id;
+            //对图片进行鉴黄识别
+            $.get(api_url,function(data,status){
+                //状态码为400，说明该图片存在异常
+                if(data.code == 400){
+                    layer.open({
+                        title: '警告！'
+                        ,content: '您的IP已被记录，请不要上传违规图片！'
+                    }); 
+                }
+                else{
+                    console.log(data.code);
+                }
+            });
+            break;
+        default:
+            api_url = '/deal/' + identify + '/' + id;
+            //对图片进行鉴黄识别
+            $.get(api_url,function(data,status){
+                var re = JSON.parse(data);
+                //状态码为400，说明该图片存在异常
+                if(data.code == 400){
+                    layer.open({
+                        title: '警告！'
+                        ,content: '您的IP已被记录，请不要上传违规图片！'
+                    }); 
+                }
+                else{
+                    console.log(data.code);
+                }
+            });
+            break;
+    }
 }
 //重置密码
 function resetpass(){
@@ -334,3 +395,43 @@ function del_id(id){
 // $(document).ready(function(){
 // 	$("body").css("background-image","url('/static/images/bg.jpg')");
 // });
+//获取cookie函数
+function getCookie(cname)
+{
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++) 
+  {
+    var c = ca[i].trim();
+    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+  return "";
+}
+//举报函数宽度设置
+function report_width() {
+    var width = document.documentElement.clientWidth;
+    if ( width <= 380 ) {
+        return '100%';
+    }
+    else if( width > 500 ) {
+        return '580px';
+    }
+    else{
+        return '380px';
+    }
+}
+//举报函数
+function report(form_url,email) {
+    //获取当前页面URL地址
+    var url = window.location.href;
+    //获取用户邮箱
+    
+    //表单地址
+    var form_url = form_url + '?email=' + email + '&url=' + url;
+    layer.open({
+        title:'违规举报',
+        type: 2, 
+        area:[report_width(),'520px'],
+        content: form_url
+    }); 
+}
