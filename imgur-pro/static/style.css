@@ -1,7 +1,8 @@
 body{
-      /* background-image:url('https://cdn.jsdelivr.net/gh/Loukky/wpcdn@master/pic/imgur/bg2.jpg'); 
+   /* background-image:url('https://cdn.jsdelivr.net/gh/Loukky/wpcdn@master/pic/imgur/bg2.jpg'); 
     background-image:url('https://imgur.loukky.com/static/bg2.jpg');*/
 	 background-image:url('https://imgs.loukky.com/imgs/2022/04/13/ef038bcc18c903f7.jpg');
+    
 	/*background: linear-gradient(to right, #333333 , #888888);*/ /* 标准的语法 */
     background-size: cover;
 	background-attachment:fixed;
@@ -318,7 +319,7 @@ body{
     z-index: 99;
     right:5px;
     bottom: 5px;
-    /* display: none; */
+    display: none;
 }
 #pic-right .layui-tab{
     margin:0 0;
@@ -329,19 +330,13 @@ body{
     background-color:#FFFFFF;
     box-shadow: 2px 2px 10px #888888;
 }
-.sideba{
-     height: auto;
-    border-radius: 3px;
-    background-color:#FFFFFF;
-    box-shadow: 2px 2px 10px #888888;
-}
 .sidebar{
     height: auto;
     /* border:1px solid #ccc; */
     border-radius: 3px;
     /* margin-bottom: 2em; */
-    /* background-color:#FFFFFF; */
-    /* box-shadow: 2px 2px 10px #888888; */
+    /*background-color:#FFFFFF;*/
+    /*box-shadow: 2px 2px 10px #888888;*/
 
     margin-bottom: 1em;
 }
@@ -389,7 +384,7 @@ body{
 }
 #imgshow{
     box-shadow: 2px 2px 10px #888888;
-     border-radius: 5px; 
+    border-radius: 5px;
     height:auto;
     /* background-color:rgba(136,136,136,0.0); */
     background-color: rgba(0,0,0,0.3);
@@ -483,7 +478,7 @@ body{
     z-index: 99;
     right:5px;
     bottom: 5px;
-   /* display: none; */
+    display: none;
 }
 
 /* .layui-layer-imgprev{
@@ -535,7 +530,7 @@ body{
 	line-height:2em;
 }
 .htmlcontent p{
-    line-height: 1.6em;
+    line-height: 24px;
 }
 .htmlcontent a{
 	color:#01AAED;
@@ -564,6 +559,10 @@ body{
 }
 .htmlcontent{
 	color:#393D49;
+}
+.htmlcontent p img{
+    margin-bottom: 14px;
+    margin-top: 14px;
 }
 #page-sidebar{
     /*background-color:#FFFFFF;*/
@@ -675,6 +674,35 @@ body{
 }
 .progress{
     display: none;
+}
+
+.pic-text {
+    /* width: 90%; */
+    margin-left:auto;
+    margin-right: auto;
+    /* position:absolute; */
+    font-size: 16px;
+    line-height: 16px;
+    padding-top:8px;
+    /* padding-bottom:2px; */
+    /* padding-left:14px; */
+    z-index:999;color: #01AAED;bottom:8px;left:0;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow:ellipsis;
+    /* background-color: #c2c2c2; */
+}
+
+.random-pic-box{
+    margin-bottom:8px;
+}
+.random-pic-box img{
+    border-radius: 5px;
+    border:1px solid #e2e2e2;
+    width: 234px;
+    height: 141px;
+    object-fit: cover;
 }
 text.header-font,div.footerword,code{
 font-family:system-ui,-apple-system,roboto,open sans,BlinkMacSystemFont,helvetica neue,Helvetica,nimbus sans l,Arial,liberation sans,pingfang sc,hiragino sans gb,noto sans cjk sc,source han sans sc,source han sans cn,microsoft yahei,noto sans sc,wenquanyi micro hei,wenquanyi zen hei,st heiti,SimHei,wenquanyi zen hei sharp,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
