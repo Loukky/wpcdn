@@ -1,4 +1,3 @@
-    <script>
     jQuery(document).ready(function($) {
 $.ajax({
     url: "/cdn-cgi/trace",
@@ -12,4 +11,3 @@ $.ajax({
     }
 });  
 });
-</script>
