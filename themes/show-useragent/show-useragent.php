@@ -3,7 +3,9 @@
  * WordPress显示访客UA信息：Show UserAgent精简版 By Phower
  */
 function show_ua_scripts() {
+	if ( is_single()  ) {
 	wp_enqueue_style( 'ua_scripts', 'https://cdn.jsdelivr.net/gh/Loukky/wpcdn/themes/show-useragent/ua-style.css' );
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'show_ua_scripts' );
