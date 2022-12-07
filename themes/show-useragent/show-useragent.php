@@ -25,48 +25,13 @@ $countryname = $record->country->name; */
 //echo json_encode($arr);
 /* 显示国家 */
 function CID_get_country( $ip ) {
-	// require_once( dirname( __FILE__ ) . '/ip2c/ip2c.php' );
-	// if ( isset( $GLOBALS['ip2c'] ) ) {
-	// 	global $ip2c;
-	// } else {
-	// 	$ip2c            = new ip2country( dirname( __FILE__ ) . '/ip2c/ip-to-country.bin' );
-	// 	$GLOBALS['ip2c'] = $ip2c;
-	// }
-
-	// return $ip2c->get_country( $ip );
-	/*$url = 'https://api.ipgeolocation.io/ipgeo?apiKey=c285f6d842e7418981b0f5280450801d&fields=country_code2,country_name&ip='.$ip;
-	$res = file_get_contents($url);
-	$res = json_decode($res,true);
-	return $res;*/
-	/*$url = 'http://www.geoplugin.net/json.gp?ip='.$ip;
-	$res = file_get_contents($url);
-	$res = json_decode($res,true);
-	return $res;*/
-	
-	/* $url = 'https://api.ipgeolocationapi.com/geolocate/'.$ip;
-
-	$res = file_get_contents($url);
-
-	$res = json_decode($res,true);
-	return $res;*/
-$reader = new Reader('/www/wwwroot/loukky.com/wp-content/plugins/wordfence/lib/GeoLite2-Country.mmdb');
-	$record = $reader->Country($ip);
-//	$countrycode2 = $record->country->isoCode;
-//  $countryname = $record->country->name;
-$enjson = array(
-    'countrycode2'=>$record->country->isoCode,
-    'countryname' =>$record->country->name
-    );
-    $resen = json_encode($enjson,JSON_UNESCAPED_UNICODE);
-    $res = json_decode($resen,true);
-    
-/*	$url = 'http://geoip2.loukky.com/getip.php?ip='.$ip;
-
-	$res = file_get_contents($url);
-
-	$res = json_decode($res,true);
-	return $res;*/
-	return $res;
+	 require_once( dirname( __FILE__ ) . '/ip2c/ip2c.php' );
+	 if ( isset( $GLOBALS['ip2c'] ) ) {
+	 	global $ip2c;
+	 } else {
+	 	$ip2c            = new ip2country( dirname( __FILE__ ) . '/ip2c/ip-to-country.bin' );
+	 	$GLOBALS['ip2c'] = $ip2c;
+	 }
 }
 
 function CID_get_flag( $ip ) {
