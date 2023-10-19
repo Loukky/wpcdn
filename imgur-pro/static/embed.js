@@ -67,9 +67,10 @@ layui.use(['upload','form','element','layer','flow'], function(){
                     layer.closeAll('loading'); 
                     $("#img-thumb a").attr('href','/img/' + res.imgid);
                     $("#img-thumb img").attr('src',res.thumbnail_url);
+                    $("#siteurl").val("https://imgur.loukky.com/img/"+res.imgid);
                     $("#url").val(res.url);
                     $("#html").val("<img src = '" + res.url + "' />");
-                    $("#markdown").val("![](" + res.url + ")");
+                    $("#markdown").val("!["+res.client_name+"](" + res.url + ")");
                     $("#bbcode").val("[img]" + res.url + "[/img]");
                     $("#dlink").val(res.delete);
 					 $("#token").val(res.token);
@@ -108,6 +109,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
             ,number:10     //可同时上传数量
             ,before: function(obj){ //上传之前的回调
                 //清空显示区域
+                $("#re-siteurl pre").empty();
                 $("#re-url pre").empty();
                 $("#re-html pre").empty();
                 $("#re-md pre").empty();
@@ -129,7 +131,7 @@ layui.use(['upload','form','element','layer','flow'], function(){
                 if(res.code == 200){
                     //得到百分比
                     //var col = (n / total) * 100;
-                    multiple(res.url,res.delete,res.token);
+                    multiple(res.url,res.delete,res.token,res.imgid,res.client_name);
                     //对图片进行鉴黄识别
                     //先获取鉴黄开关
                     porn_switch = $("#porn_switch").val();
@@ -151,13 +153,16 @@ layui.use(['upload','form','element','layer','flow'], function(){
 });
 
 //显示多图上传结果
-function multiple(url,dlink,token){
+function multiple(url,dlink,token,imgid,client_name){
+    $("#re-siteurl pre").append("https://imgur.loukky.com/img/"+imgid + "<br>");
     $("#re-url pre").append(url + "<br>");
     $("#re-html pre").append("&lt;img src = '" + url + "' /&gt;" + "<br>");
-    $("#re-md pre").append("![](" + url + ")" + "<br>");
+    $("#re-md pre").append("!["+client_name+"](" + url + ")" + "<br>");
+    //$("#re-md pre").append("!["+imgid+"](" + url + ")" + "<br>");
     $("#re-bbc pre").append("[img]" + url + "[/img]" + "<br>");
     $("#re-dlink pre").append(dlink + "<br>");
 	$("#re-token pre").append(token + "<br>");
+	
 }
 
 //复制链接
@@ -259,9 +264,18 @@ function show_imgcon(id){
 function hide_imgcon(id){
     $("#imgcon" + id).hide();
 }
-
+//查看图片信息
+function imginfo(imgid,title){
+        layer.open({
+            type:2,
+            title:title,
+           //area:["580px","420px"],
+			maxWidth:'600',
+		    maxHeight:'360',
+	        offset:'auto',
+            content:"/manage/imginfo/"+imgid})}
 //显示图片链接
-function showlink(url,thumburl){
+function showlink(url,thumburl,imgid,client_name){
     layer.open({
         type: 1,
         title: false,
@@ -274,8 +288,9 @@ function showlink(url,thumburl){
     $("#img-thumb img").attr('src',thumburl);
     $("#url").val(url);
     $("#html").val("<img src = '" + url + "' />");
-    $("#markdown").val("![](" + url + ")");
+    $("#markdown").val("!["+"](" + url + ")");
     $("#bbcode").val("[img]" + url + "[/img]");
+    //$("#siteurl").val("https://imgur.loukky.com/img/"+imgid);
     $("#imglink").show();
 }
 
